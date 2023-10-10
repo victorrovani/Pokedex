@@ -27,7 +27,7 @@ main {
     margin: 0 auto;
     max-width: 100%;
     height: auto;
-    -webkit-user-drag: none;
+    user-select: none;
 }
 
 
@@ -46,13 +46,13 @@ main {
     color: hsl(0, 0%, 23%);
     top: 54.5%;
     right: 27%;
-
-    font-size:x-large;
+    font-size: x-large;
 }
 
 .pokemon_name {
     color: hsl(0, 0%, 23%);
     text-transform: capitalize;
+
 }
 
 .form {
@@ -84,6 +84,7 @@ main {
     transform: translate(-57%, 0);
     display: flex;
     gap: 20px;
+    -webkit-user-drag: none;
 }
 
 .button {
@@ -121,12 +122,27 @@ main {
     max-width: 100%;
     height: auto;
     z-index: 0;
+    pointer-events: none;
+    user-select: none;
 }
-.missingno{
+
+.missingno {
     position: absolute;
     top: 42%;
     left: 46%;
     transform: translate(-50%, -50%);
     z-index: 1;
     width: 1%;
+}
+
+.shake {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+#dice-image {
+    pointer-events: none;
+    user-select: none;
 }

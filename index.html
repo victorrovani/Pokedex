@@ -16,7 +16,7 @@
     <main>
         <img src="/images/loading-gif.gif" alt="loading" class="loading_image">
         <img src="/images/pokemon1.jpg" alt="pokemon" class="pokemon_image" style="display: none;">      
-        <img src="/images/pokedex1.png" alt="pokedex" class="pokedex">
+        <img src="/images/pokedex1.png" alt="pokedex" class="pokedex" draggable="false">
 
         <h1 class="pokemon_data">
             <span class="pokemon_number"></span> -
@@ -28,8 +28,9 @@
         </form>
 
         <div class="buttons ">
-            <button class="button btn-prev">Anterior &lt;</button>
-            <button class="button btn-next">Próximo ></button>
+            <button class="button btn-prev"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: khaki;"><title>arrow-left-bold</title><path d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z" /></svg></button>
+            <button class="button btn-random"><img id="dice-image" src="/images/dices/dice-1.svg"/></button>
+            <button class="button btn-next"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: khaki;"><title>arrow-right-bold</title><path d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" /></svg></button>
         </div>
     </main>
 </body>

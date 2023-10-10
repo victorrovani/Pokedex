@@ -6,7 +6,8 @@ const input_search = document.querySelector('.input_search');
 const form = document.querySelector('.form');
 const btn_prev = document.querySelector('.btn-prev');
 const btn_next = document.querySelector('.btn-next');
-
+const btn_random = document.querySelector('.btn-random');
+const dice_image = document.querySelector('#dice-image');
 let currentPokemon = 1;
 
 
@@ -88,11 +89,42 @@ const handleSecretCode = (event) => {
   }
 };
 
+const handleRandom = async () => {
+  const randomPokemonId = Math.floor(Math.random() * 1010) + 1;
+  renderPokemon(randomPokemonId);
+  // const random_dice = Math.floor(Math.random() * 6) + 1;
+  // dice_image.src = `/images/dices/dice-${random_dice}.svg`;
+  handleRoll()
+
+};
+
+const handleRoll = () => {
+  const dice = dice_image; // The dice element
+  const duration = 400; // Duration of the shaking animation in milliseconds
+  const interval = 40; // Interval between position changes in milliseconds
+  const startTime = Date.now(); // Start time of the shaking animation
+
+  // Start the shaking animation
+  const shakeInterval = setInterval(() => {
+    const x = Math.random() * 10 - 5; // Random horizontal position change
+    const y = Math.random() * 10 - 5; // Random vertical position change
+    dice.style.transform = `translate(${x}px, ${y}px)`;
+    const value = Math.floor(Math.random() * 6) + 1; // Random dice value between 1 and 6
+    dice_image.src = `/images/dices/dice-${value}.svg`;
+  }, interval);
+
+  // Stop the shaking animation after the specified duration
+  setTimeout(() => {
+    clearInterval(shakeInterval);
+    dice.style.transform = 'translate(0, 0)'; // Reset the dice position
+  }, duration);
+};
+
 btn_prev.addEventListener('click', handlePrev);
 btn_next.addEventListener('click', handleNext);
+btn_random.addEventListener('click', handleRandom);
 form.addEventListener('submit', handleSearch);
 
-renderPokemon(currentPokemon);
-renderPokemon(currentPokemon);
+handleRandom();
 
 

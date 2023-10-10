@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Pixelify Sans', sans-serif;
-
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
 }
 
 body {
@@ -44,10 +44,11 @@ main {
     position: absolute;
     font-weight: 600;
     color: hsl(0, 0%, 23%);
-    top: 54.5%;
-    right: 27%;
-    font-size: x-large;
-}
+    top: 57%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
 
 .pokemon_name {
     color: hsl(0, 0%, 23%);
@@ -65,15 +66,15 @@ main {
 
 .input_search {
     width: 100%;
-    padding: 6%;
+    padding: 7%;
     outline: none;
-    font-size: larger;
+    font-size: small;
     font-weight: 600;
-    color: #ffffff;
+    color: hwb(0 38% 62%);
     border: none;
-    background-color: hwb(0 13% 87%);
-    box-shadow: -2px 3px 0 #222, -4px 6px 0 #000;
-}
+    background-color: hwb(66 68% 1%);
+    box-shadow: 0 0 10px #fffae0, 0 0 20px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.2);
+  }
 
 
 .buttons {
@@ -96,7 +97,7 @@ main {
     font-weight: 600;
     color: #dbdbdb;
     background-color: #242424;
-
+    cursor: pointer;
     box-shadow: -2px 3px 0 #222, -4px 6px 0 #000;
 }
 
@@ -145,4 +146,103 @@ main {
 #dice-image {
     pointer-events: none;
     user-select: none;
+}
+
+.pokemon_name {
+    font-size: 12px;
+  }
+  
+  .pokemon_number {
+    font-size: 12px;
+  }
+  
+  .pokemon_types {
+    font-size: 12px;
+  }
+  
+  .input_label {
+    font-size: 12px;
+  }
+
+  .pokemon_type {
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  margin-right: 0.5em;
+  border-radius: 0.5em;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.2);
+}
+
+.pokemon_type_normal {
+  background-color: #A8A878;
+}
+
+.pokemon_type_fire {
+  background-color: #F08030;
+}
+
+.pokemon_type_water {
+  background-color: #6890F0;
+}
+
+.pokemon_type_electric {
+  background-color: #F8D030;
+}
+
+.pokemon_type_grass {
+  background-color: #78C850;
+}
+
+.pokemon_type_ice {
+  background-color: #98D8D8;
+}
+
+.pokemon_type_fighting {
+  background-color: #C03028;
+}
+
+.pokemon_type_poison {
+  background-color: #A040A0;
+}
+
+.pokemon_type_ground {
+  background-color: #E0C068;
+}
+
+.pokemon_type_flying {
+  background-color: #A890F0;
+}
+
+.pokemon_type_psychic {
+  background-color: #F85888;
+}
+
+.pokemon_type_bug {
+  background-color: #A8B820;
+}
+
+.pokemon_type_rock {
+  background-color: #B8A038;
+}
+
+.pokemon_type_ghost {
+  background-color: #705898;
+}
+
+.pokemon_type_dragon {
+  background-color: #7038F8;
+}
+
+.pokemon_type_dark {
+  background-color: #705848;
+}
+
+.pokemon_type_steel {
+  background-color: #B8B8D0;
+}
+
+.pokemon_type_fairy {
+  background-color: #EE99AC;
 }

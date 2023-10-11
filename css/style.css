@@ -1,170 +1,182 @@
+/* Import the Press Start 2P font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 
+/* Rest of your CSS rules */
+
+/* Apply some global styles to all elements */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 16px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 16px;
 }
 
+/* Set the background color and text alignment for the body */
 body {
-    background: linear-gradient(to bottom, hsl(198, 100%, 66%), hwb(54 51% 0%));
-    text-align: center;
-    min-height: 100vh;
+  background: linear-gradient(to bottom, hsl(198, 100%, 66%), hwb(54 51% 0%));
+  text-align: center;
+  min-height: 100vh;
 }
 
+/* Style the main content container */
 main {
-    display: inline-block;
-    margin-top: 2%;
-    padding: 15px;
-    position: relative
+  display: inline-block;
+  margin-top: 2%;
+  padding: 15px;
+  position: relative
 }
 
+/* Style the Pokédex image */
 .pokedex {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    height: auto;
-    user-select: none;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  user-select: none;
 }
 
-
+/* Style the Pokémon image */
 .pokemon_image {
-    position: absolute;
-    bottom: 52%;
-    left: 50%;
-    transform: translate(-63%, 20%);
-    width: 30%;
-
+  position: absolute;
+  bottom: 52%;
+  left: 50%;
+  transform: translate(-63%, 20%);
+  width: 30%;
 }
 
+/* Style the Pokémon data */
 .pokemon_data {
-    position: absolute;
-    font-weight: 600;
-    color: hsl(0, 0%, 23%);
-    top: 57%;
-    left: 47%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-
-.pokemon_name {
-    color: hsl(0, 0%, 23%);
-    text-transform: capitalize;
-
+  position: absolute;
+  font-weight: 600;
+  color: hsl(0, 0%, 23%);
+  top: 56.5%;
+  left: 47%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 
+/* Style the Pokémon name */
+.pokemon_name {
+  color: hsl(0, 0%, 23%);
+  text-transform: capitalize;
+  font-size: 12px;
+}
+
+/* Style the Pokémon number */
+.pokemon_number {
+  font-size: 12px;
+}
+
+/* Style the Pokémon types */
+.pokemon_types {
+  font-size: 12px;
+}
+
+/* Style the search form */
 .form {
-    position: absolute;
-    width: 65%;
-    background-color: hsl(0, 0%, 18%);
-    top: 65%;
-    left: 14%
+  position: absolute;
+  width: 65%;
+  background-color: hsl(0, 0%, 18%);
+  top: 65%;
+  left: 14%
 }
 
+/* Style the search input */
 .input_search {
-    width: 100%;
-    padding: 7%;
-    outline: none;
-    font-size: small;
-    font-weight: 600;
-    color: hwb(0 38% 62%);
-    border: none;
-    background-color: hwb(66 68% 1%);
-    box-shadow: 0 0 10px #fffae0, 0 0 20px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.2);
-  }
+  width: 100%;
+  padding: 7%;
+  outline: none;
+  font-size: small;
+  font-weight: 600;
+  color: hwb(0 38% 62%);
+  border: none;
+  background-color: hwb(66 68% 1%);
+  box-shadow: 0 0 10px #fffae0, 0 0 20px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.2);
+}
 
-
+/* Style the search buttons */
 .buttons {
-    position: absolute;
-    bottom: 10%;
-    left: 51%;
-    width: 65%;
-    transform: translate(-57%, 0);
-    display: flex;
-    gap: 20px;
-    -webkit-user-drag: none;
+  position: absolute;
+  bottom: 10%;
+  left: 51%;
+  width: 65%;
+  transform: translate(-57%, 0);
+  display: flex;
+  gap: 20px;
+  -webkit-user-drag: none;
 }
 
+/* Style the search button */
 .button {
-    width: 50%;
-    padding: 4%;
-    border: 2px solid #000;
-    border-radius: 5px;
-    font-size: clamp(8px, 5vw, 1rem);
-    font-weight: 600;
-    color: #dbdbdb;
-    background-color: #242424;
-    cursor: pointer;
-    box-shadow: -2px 3px 0 #222, -4px 6px 0 #000;
+  width: 50%;
+  padding: 4%;
+  border: 2px solid #000;
+  border-radius: 5px;
+  font-size: clamp(8px, 5vw, 1rem);
+  font-weight: 600;
+  color: #dbdbdb;
+  background-color: #242424;
+  cursor: pointer;
+  box-shadow: -2px 3px 0 #222, -4px 6px 0 #000;
 }
 
+/* Style the active search button */
 .button:active {
-    background-color: hwb(0 8% 92%);
-    color: hsl(0, 0%, 85%);
-    font-size: 0.95rem;
+  background-color: hwb(0 8% 92%);
+  color: hsl(0, 0%, 85%);
+  font-size: 0.95rem;
 }
 
+/* Style the loading image */
 .loading_image {
-    position: absolute;
-    top: 42%;
-    left: 46%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    width: 30px;
-    height: 30px;
+  position: absolute;
+  top: 42%;
+  left: 46%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 30px;
+  height: 30px;
 }
 
+/* Style the Pokémon image */
 .pokemon_image {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    height: auto;
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
 }
 
+/* Style the missingno image */
 .missingno {
-    position: absolute;
-    top: 42%;
-    left: 46%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    width: 1%;
+  position: absolute;
+  top: 42%;
+  left: 46%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 1%;
 }
 
+/* Define the shake animation */
 .shake {
-    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    perspective: 1000px;
+  animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
+/* Style the dice image */
 #dice-image {
-    pointer-events: none;
-    user-select: none;
+  pointer-events: none;
+  user-select: none;
 }
 
-.pokemon_name {
-    font-size: 12px;
-  }
-  
-  .pokemon_number {
-    font-size: 12px;
-  }
-  
-  .pokemon_types {
-    font-size: 12px;
-  }
-  
-  .input_label {
-    font-size: 12px;
-  }
-
-  .pokemon_type {
+/* Style the Pokémon types */
+.pokemon_type {
   display: inline-block;
   padding: 0.2em 0.5em;
   margin-right: 0.5em;
@@ -175,74 +187,168 @@ main {
   box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.2);
 }
 
+/* Style the normal type */
 .pokemon_type_normal {
   background-color: #A8A878;
 }
 
+/* Style the fire type */
 .pokemon_type_fire {
   background-color: #F08030;
 }
 
+/* Style the water type */
 .pokemon_type_water {
   background-color: #6890F0;
 }
 
+/* Style the electric type */
 .pokemon_type_electric {
   background-color: #F8D030;
 }
 
+/* Style the grass type */
 .pokemon_type_grass {
   background-color: #78C850;
 }
 
+/* Style the ice type */
 .pokemon_type_ice {
   background-color: #98D8D8;
 }
 
+/* Style the fighting type */
 .pokemon_type_fighting {
   background-color: #C03028;
 }
 
+/* Style the poison type */
 .pokemon_type_poison {
   background-color: #A040A0;
 }
 
+/* Style the ground type */
 .pokemon_type_ground {
   background-color: #E0C068;
 }
 
+/* Style the flying type */
 .pokemon_type_flying {
   background-color: #A890F0;
 }
 
+/* Style the psychic type */
 .pokemon_type_psychic {
   background-color: #F85888;
 }
 
+/* Style the bug type */
 .pokemon_type_bug {
   background-color: #A8B820;
 }
 
+/* Style the rock type */
 .pokemon_type_rock {
   background-color: #B8A038;
 }
 
+/* Style the ghost type */
 .pokemon_type_ghost {
   background-color: #705898;
 }
 
+/* Style the dragon type */
 .pokemon_type_dragon {
   background-color: #7038F8;
 }
 
+/* Style the dark type */
 .pokemon_type_dark {
   background-color: #705848;
 }
 
+/* Style the steel type */
 .pokemon_type_steel {
-  background-color: #B8B8D0;
+  background-color: #9eb7e8;
 }
 
+/* Style the fairy type */
 .pokemon_type_fairy {
-  background-color: #EE99AC;
+  background-color: #f4bdc9;
 }
+
+.health_bar_container {
+  position: relative;
+}
+
+.health_bar {
+  position: absolute;
+  left: 0;
+  top: -13px;
+  height: 11px;
+  background-color: #81e944;
+  border: 1px solid #333;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #24ff1c;
+  min-width: 100%;
+}
+
+.hp_text {
+  position: absolute;
+  top: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  font-weight: 400;
+  color: #fff;
+  font-family: "Press Start 2P", sans-serif;
+  text-shadow: 0 0 5px #333;
+  white-space: nowrap;
+}
+
+#toggle-shiny {
+  position: absolute;
+  border-radius: 32%;
+  color: #fff;
+  background-color: #f44336;
+  font-size: 20px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  top: 25.2%;
+  right: 47.8%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+}
+
+
+#toggle-shiny:hover {
+  background-color: #ffeb34;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  
+}
+
+#toggle-shiny:active {
+  transform: translateY(-50%) scale(0.95);
+  box-shadow: 5px 5px 15px rgb(230, 255, 2);
+  animation: shine 1s ease-in-out forwards;
+}
+
+@keyframes shine {
+  0% {
+    box-shadow: 5px 5px 15px rgb(230, 255, 2);
+  }
+  50% {
+    box-shadow: 5px 5px 30px rgb(255, 255, 255);
+  }
+  100% {
+    box-shadow: 5px 5px 15px rgb(230, 255, 2);
+  }
+}
+

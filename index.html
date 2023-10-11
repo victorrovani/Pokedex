@@ -15,15 +15,24 @@
 <body>
 
     <main>
+        
         <img src="/images/loading-gif.gif" alt="loading" class="loading_image">
-        <img src="/images/pokemon1.jpg" alt="pokemon" class="pokemon_image" style="display: none;">
+        <img alt="pokemon" class="pokemon_image" style="display: none;">
         <img src="/images/pokedex1.png" alt="pokedex" class="pokedex" draggable="false">
-
+        <div class="pokemon_image_container"></div>
+        <div id="toggle-shiny" title="Toggle Shiny">&#x1F31F;</div>
+        </div>
+        
         <div class="pokemon_data">
+            <div class="health_bar_container">
+                <div class="health_bar"></div>
+                <div class="bar"></div>
+                 <div class="hp_text"></div>
+            </div>
             <div class="pokemon_number"></div>
             <div class="pokemon_name"></div>
             <div class="pokemon_types"></div>
-          </div>
+        </div>
 
         <form class="form">
             <input type="search" class="input_search" placeholder="Nome ou número" required />
@@ -46,3 +55,4 @@
 </body>
 
 </html>
+

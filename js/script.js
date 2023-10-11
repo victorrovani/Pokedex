@@ -15,75 +15,57 @@ const dice_image = document.querySelector('#dice-image');
 // Set API URL and initial Pokemon
 const apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 let currentPokemon = 1;
+let isShiny = localStorage.getItem('isShiny') === 'true' || false;
 
-// Handle the "Toggle Shiny" button click
+function renderPokemonImage(pokemonId) {
+  // Marcar que está carregando
+
+
+  // Buscar info na api
+
+  // Mostrar imagem, nome e numero, .....
+
+  // Verficar se tem shiny, se nao tiver, remover botão shiny
+
+  // Marcar que terminou de carregar
+
+
+  // const pokemonImage = document.querySelector('.pokemon_image');
+  // if (spriteUrl) {
+  //   pokemonImage.src = spriteUrl;
+  //   pokemonImage.style.display = 'block';
+  // } else {
+  //   pokemonImage.style.display = 'none';
+  // }
+  // if (!spriteUrl && isShiny) {
+  //   const nonShinySpriteUrl = spriteUrl?.replace('/shiny/', '/') ?? 'https://via.placeholder.com/150?text=No+Sprite';
+  //   pokemonImage.src = nonShinySpriteUrl;
+  //   pokemonImage.style.display = 'block'; 
+  // }
+}
+
 const toggleShinyButton = document.querySelector('#toggle-shiny');
-let isShiny = false;
 
 toggleShinyButton.addEventListener('click', async () => {
-  const data = await fetchPokemon(currentPokemon);
-  if (data === null) {
-    // Handle error
-  } else {
-    isShiny = !isShiny;
-    const pokemonImage = isShiny ? data.sprites.back_shiny : data.sprites.back_default;
-    renderPokemonImage(pokemonImage);
-  }
+  console.log('Toggle Shiny button clicked, isShiny:', isShiny);
+  isShiny = !isShiny;
+  toggleShinyButton.classList.toggle('active', isShiny);
+  renderPokemon(currentPokemon);
+
 });
-
-// Define the renderPokemonImage function
-const renderPokemonImage = (imageUrl) => {
-  const pokemonImage = document.querySelector('#pokemon-image');
-  if (pokemonImage) { // Check if the element exists
-    pokemonImage.src = imageUrl;
-  }
-};
-
-
-// Render a random Pokemon
-renderPokemon = async (pokemon) => {
-  loading_image.style.display = 'block';
-  pokemon_image.style.display = 'none';
-
-  const data = await fetchPokemon(pokemon);
-  if (data === null) {
-    const healthBarHTML = createHealthBar(0, 0);
-    document.querySelector('.health_bar_container').innerHTML = healthBarHTML;
-  } else {
-    updatePokemonData(data);
-    const pokemonData = createPokemonData(data);
-    const healthBarHTML = createHealthBar(pokemonData.hp, pokemonData.maxHp);
-    document.querySelector('.health_bar_container').innerHTML = healthBarHTML;
-    const healthBar = document.querySelector('.health_bar_container .health_bar');
-    healthBar.style.width = `${(pokemonData.hp / pokemonData.maxHp) * 100}%`;
-    if (pokemonData.hp === pokemonData.maxHp) {
-      healthBar.classList.add('green');
-    } else {
-      healthBar.classList.remove('green');
-    }
-    const hasShiny = data.sprites.back_shiny !== null;
-    renderPokemonData(pokemonData.name, pokemonData.types, hasShiny);
-    const pokemonImage = data.sprites.back_default;
-    renderPokemonImage(pokemonImage);
-  }
-
-  loading_image.style.display = 'none';
-  pokemon_image.style.display = 'block';
-};
-
 
 
 // Define the fetchPokemon function
 const fetchPokemon = async (pokemon) => {
   try {
-    const response = await fetch(`${apiUrl}${pokemon}`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error fetching Pokemon data:', error);
     return null;
   }
 };
@@ -98,28 +80,25 @@ const renderPokemonData = (name, types) => {
   document.querySelector('.pokemon_types').textContent = pokemonTypes.join(', ');
 };
 
-const init = async () => {
-  const data = await fetchPokemon(currentPokemon);
-  if (data === null) {
-    // Handle error
-  } else {
-    const pokemonData = createPokemonData(data);
-    const pokemonImage = data.sprites.back_default; // Get the back sprite of the Pokemon
-    // Render the Pokemon data and image
-    renderPokemonData(pokemonData.name, pokemonData.types);
-    renderPokemonImage(pokemonImage);
-  }
-};
-
-init();
-
 // Update the DOM with Pokemon data and types
 async function updatePokemonData(data) {
   const pokemonNumber = data.id.toString().padStart(3, '0');
   const pokemonName = data.name.charAt(0).toUpperCase() + data.name.slice(1);
-  const pokemonImage = data.sprites.front_default;
+  //poken has shiny sprite
+  var pokemonImage = data.sprites.front_default;
+  const sprite = data.sprites.front_shiny
+  if (!sprite) {
+    isShiny = false;
+    toggleShinyButton.style.display = "none"; // Hide the "Shiny" button
+  } else {
+    toggleShinyButton.style.display = "block"; // Show the "Shiny" button
+    if (isShiny)
+      pokemonImage = sprite;
+  }
+
   const pokemonTypes = data.types.map(type => type.type.name);
 
+  input_search.value = data.name;
   document.querySelector('.pokemon_number').textContent = pokemonNumber;
   document.querySelector('.pokemon_name').textContent = pokemonName;
   document.querySelector('.pokemon_image').src = pokemonImage;
@@ -150,16 +129,6 @@ const createPokemonData = (data) => {
   return pokemonData;
 }
 
-//make the width based on the pokemon's HP value (fetch the HP value from the api)
-const createHealthBar = (pokemonHp, pokemonMaxHp) => {
-  const healthPercentage = (pokemonMaxHp) ;
-  const healthBarHTML = `
-    <div class="health_bar" style=" width: ${healthPercentage}%; position: relative;">
-      <div class="hp_text" style="">${pokemonHp} / ${pokemonMaxHp}</div>
-    </div>
-  `;
-  return healthBarHTML;
-};
 
 // Render the Pokemon types in the DOM
 const renderPokemonTypes = (types) => {
@@ -179,9 +148,16 @@ const renderPokemonTypes = (types) => {
 };
 
 // Render a random Pokemon
-renderPokemon = async (pokemon) => {
+const renderPokemon = async (pokemon) => {
   loading_image.style.display = 'block';
   pokemon_image.style.display = 'none';
+  input_search.disabled = true;
+
+  btn_next.disabled = true;
+  btn_prev.disabled = true;
+  btn_random.disabled = true;
+
+
 
   const data = await fetchPokemon(pokemon);
   if (data === null) {
@@ -203,33 +179,40 @@ renderPokemon = async (pokemon) => {
 
   loading_image.style.display = 'none';
   pokemon_image.style.display = 'block';
+  input_search.disabled = false;
+
+  btn_next.disabled = false;
+  btn_prev.disabled = false;
+  btn_random.disabled = false;
 };
-
-
-
-
-
 // Handle the "Next" button click
-const handleNext = () => {
+const handleNext = async () => {
   if (currentPokemon === 1010) {
     currentPokemon = 1;
   } else {
     currentPokemon++;
   }
-  renderPokemon(currentPokemon);
+  isShiny = false; // Reset isShiny to false
+  await renderPokemon(currentPokemon);
 };
 
 // Handle the "Previous" button click
-const handlePrev = () => {
+const handlePrev = async () => {
   if (currentPokemon === 1) {
     currentPokemon = 1010;
   } else {
     currentPokemon--;
   }
-  renderPokemon(currentPokemon);
+  isShiny = false; // Reset isShiny to false
+  await renderPokemon(currentPokemon);
 };
 
 // Handle the search form submission
+const MISSINGNO_NAME = 'Missingno';
+const MISSINGNO_NUMBER = '?';
+const MISSINGNO_IMAGE_URL = 'images/missingno.png';
+const MISSINGNO_TYPES = 'N/A';
+
 const handleSearch = async (event) => {
   event.preventDefault();
   const pokemon = input_search.value.toLowerCase();
@@ -238,10 +221,10 @@ const handleSearch = async (event) => {
   } else {
     const data = await fetchPokemon(pokemon);
     if (data === null) {
-      pokemon_name.innerHTML = 'Missingno';
-      pokemon_number.innerHTML = '?';
-      pokemon_image.src = 'images/missingno.png';
-      pokemonTypes.innerHTML = 'N/A';
+      pokemon_name.innerHTML = MISSINGNO_NAME;
+      pokemon_number.innerHTML = MISSINGNO_NUMBER;
+      pokemon_image.src = MISSINGNO_IMAGE_URL;
+      pokemonTypes.innerHTML = MISSINGNO_TYPES;
     } else {
       currentPokemon = data.id;
       renderPokemon(currentPokemon);
@@ -262,6 +245,8 @@ const handleSecretCode = (event) => {
 const handleRandom = async () => {
   const randomPokemonId = Math.floor(Math.random() * 1010) + 1;
   currentPokemon = randomPokemonId;
+  isShiny = false; // Reset isShiny to false
+  handleRoll();
   await renderPokemon(currentPokemon);
 };
 
@@ -285,6 +270,46 @@ const handleRoll = () => {
   }, duration);
 };
 
+//Make the width based on the pokemon's HP value (fetch the HP value from the api)
+const createHealthBar = (pokemonHp, pokemonMaxHp) => {
+  const healthPercentage = (pokemonMaxHp);
+  const healthBarHTML = `
+    <div class="health_bar" style=" width: ${healthPercentage}%; position: relative;">
+      <div class="hp_text" style="">${pokemonHp} / ${pokemonMaxHp}</div>
+    </div>
+  `;
+  return healthBarHTML;
+};
+
+//Clean placeholder on click
+
+const clearPlaceholder = () => {
+  const searchInput = document.querySelector('.input_search');
+  searchInput.placeholder = '';
+};
+
+//Shiny Button
+const toggleShiny = () => {
+  const pokemonImage = document.querySelector('#pokemon-image');
+  if (pokemonImage) {
+    pokemonImage.classList.toggle('shiny');
+  } else {
+    console.error('Error toggling shiny class: Pokemon image not found');
+  }
+};
+
+const handleShiny = async () => {
+  if (currentPokemon === MISSINGNO_ID) {
+    isShiny = false;
+    toggleShinyButton.style.display = "none"; // Hide the "Shiny" button
+    renderPokemon(MISSINGNO_ID);
+  } else {
+    isShiny = !isShiny;
+    renderPokemon(currentPokemon);
+    toggleShinyButton.style.display = "block"; // Show the "Shiny" button
+  }
+};
+
 // Add event listeners
 btn_prev.addEventListener('click', handlePrev);
 btn_next.addEventListener('click', handleNext);
@@ -293,4 +318,4 @@ form.addEventListener('submit', handleSearch);
 input_search.addEventListener('keydown', handleSecretCode);
 
 // Render a random Pokemon on page load
-renderPokemon(Math.floor(Math.random() * 1010) + 1);
+handleRandom();

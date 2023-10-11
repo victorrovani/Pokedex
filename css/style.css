@@ -6,8 +6,11 @@
 
 /* Apply some global styles to all elements */
 * {
-  margin: 0;
-  padding: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   box-sizing: border-box;
   font-family: 'Press Start 2P', cursive;
   font-size: 16px;
@@ -120,6 +123,7 @@ main {
   background-color: #242424;
   cursor: pointer;
   box-shadow: -2px 3px 0 #222, -4px 6px 0 #000;
+  transition: all 0.2s ease-in-out;
 }
 
 /* Style the active search button */
@@ -127,6 +131,13 @@ main {
   background-color: hwb(0 8% 92%);
   color: hsl(0, 0%, 85%);
   font-size: 0.95rem;
+}
+
+.button:disabled {
+  background-color: hwb(0 13% 87%);
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+  transform: translate(-2px, 4px) !important;
 }
 
 /* Style the loading image */
@@ -151,14 +162,12 @@ main {
   user-select: none;
 }
 
-/* Style the missingno image */
 .missingno {
-  position: absolute;
-  top: 42%;
-  left: 46%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  width: 1%;
+  position:absolute;
+  background-color: #f0f0f0;
+  color: #333;
+  height:10%;
+  width: 10%;
 }
 
 /* Define the shake animation */
@@ -324,31 +333,62 @@ main {
   align-items: center;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none
+}
 
+#toggle-shiny.active {
+  background-color: #ffeb34 !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 
 #toggle-shiny:hover {
   background-color: #ffeb34;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  
+
 }
 
-#toggle-shiny:active {
-  transform: translateY(-50%) scale(0.95);
-  box-shadow: 5px 5px 15px rgb(230, 255, 2);
-  animation: shine 1s ease-in-out forwards;
-}
 
 @keyframes shine {
   0% {
     box-shadow: 5px 5px 15px rgb(230, 255, 2);
   }
+
   50% {
     box-shadow: 5px 5px 30px rgb(255, 255, 255);
   }
+
   100% {
     box-shadow: 5px 5px 15px rgb(230, 255, 2);
   }
 }
 
+.shiny {
+  filter: hue-rotate(120deg);
+}
+
+.shiny_button.glow {
+  background-color: #ffcc00;
+  color: #fff;
+  box-shadow: 0 0 10px #ffcc00;
+  animation: glow 1s ease-in-out infinite;
+  /* Add animation to button */
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 5px 5px 15px rgb(230, 255, 2);
+  }
+
+  50% {
+    box-shadow: 5px 5px 30px rgb(255, 255, 255);
+  }
+
+  100% {
+    box-shadow: 5px 5px 15px rgb(230, 255, 2);
+  }
+}

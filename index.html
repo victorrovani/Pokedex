@@ -7,7 +7,6 @@
 
     <link rel="icon" sizes="16x16" href="images/pokeball.png">
     <link rel="stylesheet" sizes="16x16" href="css/style.css">
-
     <script defer src="js/script.js"></script>
     <title>Pokedex</title>
 </head>
@@ -15,19 +14,20 @@
 <body>
 
     <main>
-        
+
+        <img alt="pokemon" class="missingno" src="/images/missingno.png" style="display: none;">
         <img src="/images/loading-gif.gif" alt="loading" class="loading_image">
         <img alt="pokemon" class="pokemon_image" style="display: none;">
         <img src="/images/pokedex1.png" alt="pokedex" class="pokedex" draggable="false">
         <div class="pokemon_image_container"></div>
+        
         <div id="toggle-shiny" title="Toggle Shiny">&#x1F31F;</div>
-        </div>
         
         <div class="pokemon_data">
             <div class="health_bar_container">
                 <div class="health_bar"></div>
                 <div class="bar"></div>
-                 <div class="hp_text"></div>
+                <div class="hp_text"></div>
             </div>
             <div class="pokemon_number"></div>
             <div class="pokemon_name"></div>
@@ -35,10 +35,10 @@
         </div>
 
         <form class="form">
-            <input type="search" class="input_search" placeholder="Nome ou número" required />
+            <input type="search" class="input_search" placeholder="Nome ou número" required onfocus="clearPlaceholder()" />
         </form>
 
-        <div class="buttons ">
+        <div class="buttons">
             <button class="button btn-prev"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                     style="fill: khaki;">
                     <title>arrow-left-bold</title>
@@ -55,4 +55,3 @@
 </body>
 
 </html>
-

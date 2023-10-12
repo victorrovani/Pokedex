@@ -162,13 +162,6 @@ main {
   user-select: none;
 }
 
-.missingno {
-  position:absolute;
-  background-color: #f0f0f0;
-  color: #333;
-  height:10%;
-  width: 10%;
-}
 
 /* Define the shake animation */
 .shake {
@@ -332,12 +325,9 @@ main {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  user-select: none;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none
+  transition: 
+    background-color 0.5s ease-in-out,
+    box-shadow 0.5s ease-in-out;
 }
 
 #toggle-shiny.active {
@@ -352,43 +342,3 @@ main {
 
 }
 
-
-@keyframes shine {
-  0% {
-    box-shadow: 5px 5px 15px rgb(230, 255, 2);
-  }
-
-  50% {
-    box-shadow: 5px 5px 30px rgb(255, 255, 255);
-  }
-
-  100% {
-    box-shadow: 5px 5px 15px rgb(230, 255, 2);
-  }
-}
-
-.shiny {
-  filter: hue-rotate(120deg);
-}
-
-.shiny_button.glow {
-  background-color: #ffcc00;
-  color: #fff;
-  box-shadow: 0 0 10px #ffcc00;
-  animation: glow 1s ease-in-out infinite;
-  /* Add animation to button */
-}
-
-@keyframes glow {
-  0% {
-    box-shadow: 5px 5px 15px rgb(230, 255, 2);
-  }
-
-  50% {
-    box-shadow: 5px 5px 30px rgb(255, 255, 255);
-  }
-
-  100% {
-    box-shadow: 5px 5px 15px rgb(230, 255, 2);
-  }
-}

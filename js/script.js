@@ -158,6 +158,8 @@ const renderPokemon = async (pokemon) => {
   btn_random.disabled = true;
 
 
+  //If pokemon shiny then button active
+  toggleShinyButton.classList.toggle('active', isShiny);
 
   const data = await fetchPokemon(pokemon);
   if (data === null) {
@@ -288,15 +290,20 @@ const clearPlaceholder = () => {
   searchInput.placeholder = '';
 };
 
-//Shiny Button
 const toggleShiny = () => {
-  const pokemonImage = document.querySelector('#pokemon-image');
-  if (pokemonImage) {
-    pokemonImage.classList.toggle('shiny');
-  } else {
-    console.error('Error toggling shiny class: Pokemon image not found');
-  }
+  isShiny = !isShiny;
+  renderPokemon(currentPokemon);
+  toggleShinyButton.classList.toggle('active', isShiny);
 };
+
+// Add touch events for mobile devices
+toggleShinyButton.addEventListener('touchstart', (event) => {
+  event.preventDefault();
+  toggleShiny();
+});
+toggleShinyButton.addEventListener('touchend', (event) => {
+  event.preventDefault();
+});
 
 const handleShiny = async () => {
   if (currentPokemon === MISSINGNO_ID) {

@@ -189,92 +189,75 @@ main {
   box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.2);
 }
 
-/* Style the normal type */
+/* Style all the types */
 .pokemon_type_normal {
   background-color: #A8A878;
 }
 
-/* Style the fire type */
 .pokemon_type_fire {
   background-color: #F08030;
 }
 
-/* Style the water type */
 .pokemon_type_water {
   background-color: #6890F0;
 }
 
-/* Style the electric type */
 .pokemon_type_electric {
   background-color: #F8D030;
 }
 
-/* Style the grass type */
 .pokemon_type_grass {
   background-color: #78C850;
 }
 
-/* Style the ice type */
 .pokemon_type_ice {
   background-color: #98D8D8;
 }
 
-/* Style the fighting type */
 .pokemon_type_fighting {
   background-color: #C03028;
 }
 
-/* Style the poison type */
 .pokemon_type_poison {
   background-color: #A040A0;
 }
 
-/* Style the ground type */
 .pokemon_type_ground {
   background-color: #E0C068;
 }
 
-/* Style the flying type */
 .pokemon_type_flying {
   background-color: #A890F0;
 }
 
-/* Style the psychic type */
 .pokemon_type_psychic {
   background-color: #F85888;
 }
 
-/* Style the bug type */
 .pokemon_type_bug {
   background-color: #A8B820;
 }
 
-/* Style the rock type */
 .pokemon_type_rock {
   background-color: #B8A038;
 }
 
-/* Style the ghost type */
 .pokemon_type_ghost {
   background-color: #705898;
 }
 
-/* Style the dragon type */
 .pokemon_type_dragon {
   background-color: #7038F8;
 }
 
-/* Style the dark type */
 .pokemon_type_dark {
   background-color: #705848;
 }
 
-/* Style the steel type */
 .pokemon_type_steel {
   background-color: #9eb7e8;
 }
 
-/* Style the fairy type */
 .pokemon_type_fairy {
   background-color: #f4bdc9;
 }
@@ -311,7 +294,6 @@ main {
 #toggle-shiny {
   position: absolute;
   border-radius: 32%;
-  color: #fff;
   background-color: #f44336;
   font-size: 20px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -325,7 +307,7 @@ main {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: 
+  transition:
     background-color 0.5s ease-in-out,
     box-shadow 0.5s ease-in-out;
 }
@@ -342,3 +324,36 @@ main {
 
 }
 
+.pokemon_matchups {
+  position: absolute;
+  top: 50%;
+  left: 70%;
+  transform: translateX(100%);
+  transform: translateY(-50%);
+  width: 7px;
+}
+
+.pokemon_weakness,
+.pokemon_strength { 
+  display: inline-block;
+  width: 180px;
+  /* Set a fixed width */
+  padding: 4px 18px;
+  margin: 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.2);
+}
+.pokemon_weaknesses_box {
+  background-color: #e25c53;
+}
+
+.pokemon_strengths_box {
+  background-color: #65d669;
+}
+
+.pokemon_matchups .pokemon_strengths_box h2 {
+  color: green;
+}

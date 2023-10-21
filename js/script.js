@@ -10,38 +10,15 @@ const btn_prev = document.querySelector('.btn-prev');
 const btn_next = document.querySelector('.btn-next');
 const btn_random = document.querySelector('.btn-random');
 const dice_image = document.querySelector('#dice-image');
-
+const weaknessesBox = document.querySelector('.weaknesses_box');
+const strengthsBox = document.querySelector('.strengths_box');
 
 // Set API URL and initial Pokemon
 const apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 let currentPokemon = 1;
 let isShiny = localStorage.getItem('isShiny') === 'true' || false;
 
-function renderPokemonImage(pokemonId) {
-  // Marcar que está carregando
-
-
-  // Buscar info na api
-
-  // Mostrar imagem, nome e numero, .....
-
-  // Verficar se tem shiny, se nao tiver, remover botão shiny
-
-  // Marcar que terminou de carregar
-
-
-  // const pokemonImage = document.querySelector('.pokemon_image');
-  // if (spriteUrl) {
-  //   pokemonImage.src = spriteUrl;
-  //   pokemonImage.style.display = 'block';
-  // } else {
-  //   pokemonImage.style.display = 'none';
-  // }
-  // if (!spriteUrl && isShiny) {
-  //   const nonShinySpriteUrl = spriteUrl?.replace('/shiny/', '/') ?? 'https://via.placeholder.com/150?text=No+Sprite';
-  //   pokemonImage.src = nonShinySpriteUrl;
-  //   pokemonImage.style.display = 'block'; 
-  // }
+function renderPokemonImage() {
 }
 
 const toggleShinyButton = document.querySelector('#toggle-shiny');
@@ -84,7 +61,7 @@ const renderPokemonData = (name, types) => {
 async function updatePokemonData(data) {
   const pokemonNumber = data.id.toString().padStart(3, '0');
   const pokemonName = data.name.charAt(0).toUpperCase() + data.name.slice(1);
-  //poken has shiny sprite
+  //Pokemon has shiny sprite
   var pokemonImage = data.sprites.front_default;
   const sprite = data.sprites.front_shiny
   if (!sprite) {
@@ -147,7 +124,99 @@ const renderPokemonTypes = (types) => {
   });
 };
 
-// Render a random Pokemon
+const types = {
+  NORMAL: { weaknesses: ['FIGHTING'], strengths: [] },
+  FIGHTING: { weaknesses: ['FLYING', 'PSYCHIC', 'FAIRY'], strengths: ['NORMAL', 'ROCK', 'STEEL', 'ICE', 'DARK'] },
+  FLYING: { weaknesses: ['ROCK', 'ELECTRIC', 'ICE'], strengths: ['FIGHTING', 'BUG', 'GRASS'] },
+  POISON: { weaknesses: ['GROUND', 'PSYCHIC'], strengths: ['GRASS', 'FAIRY'] },
+  GROUND: { weaknesses: ['WATER', 'GRASS', 'ICE'], strengths: ['POISON', 'ROCK', 'STEEL', 'FIRE', 'ELECTRIC'] },
+  ROCK: { weaknesses: ['FIGHTING', 'GROUND', 'STEEL', 'WATER', 'GRASS'], strengths: ['FLYING', 'BUG', 'FIRE', 'ICE'] },
+  BUG: { weaknesses: ['FLYING', 'ROCK', 'FIRE'], strengths: ['GRASS', 'PSYCHIC', 'DARK'] },
+  GHOST: { weaknesses: ['GHOST', 'DARK'], strengths: ['PSYCHIC', 'GHOST'] },
+  STEEL: { weaknesses: ['FIGHTING', 'GROUND', 'FIRE'], strengths: ['ROCK', 'ICE', 'FAIRY'] },
+  FIRE: { weaknesses: ['GROUND', 'ROCK', 'WATER'], strengths: ['BUG', 'STEEL', 'GRASS', 'ICE'] },
+  WATER: { weaknesses: ['GRASS', 'ELECTRIC'], strengths: ['GROUND', 'ROCK', 'FIRE'] },
+  GRASS: { weaknesses: ['FLYING', 'POISON', 'BUG', 'FIRE', 'ICE'], strengths: ['GROUND', 'ROCK', 'WATER'] },
+  ELECTRIC: { weaknesses: ['GROUND'], strengths: ['FLYING', 'WATER'] },
+  PSYCHIC: { weaknesses: ['BUG', 'GHOST', 'DARK'], strengths: ['FIGHTING', 'POISON'] },
+  ICE: { weaknesses: ['FIGHTING', 'ROCK', 'STEEL', 'FIRE'], strengths: ['FLYING', 'GROUND', 'GRASS', 'DRAGON'] },
+  DRAGON: { weaknesses: ['ICE', 'DRAGON', 'FAIRY'], strengths: ['DRAGON'] },
+  DARK: { weaknesses: ['FIGHTING', 'BUG', 'FAIRY'], strengths: ['GHOST', 'PSYCHIC'] },
+  FAIRY: { weaknesses: ['POISON', 'STEEL'], strengths: ['FIGHTING', 'DRAGON', 'DARK'] },
+};
+
+function calculateMultipliers(attackingType, defendingTypes) {
+  var weaknesses = new Set();
+  var strengths = new Set();
+
+  defendingTypes.forEach(function(defendingType) {
+    var multiplier = 1;
+    types[defendingType].weaknesses.forEach(function(weakness) {
+      if (weakness === attackingType && !weaknesses.has(defendingType)) {
+        strengths.delete(defendingType);
+        weaknesses.add(defendingType);
+      } else if (!strengths.has(defendingType)) {
+        multiplier *= 2;
+        strengths.add(defendingType);
+      }
+    });
+    types[defendingType].strengths.forEach(function(strength) {
+      if (strength === attackingType && !strengths.has(defendingType)) {
+        weaknesses.delete(defendingType);
+        strengths.add(defendingType);
+      } else if (!weaknesses.has(defendingType)) {
+        multiplier *= 0.5;
+        weaknesses.add(defendingType);
+      }
+    });
+  });
+
+  return {
+    weaknesses: Array.from(weaknesses),
+    strengths: Array.from(strengths),
+  };
+}
+
+// Render the Pokemon weaknesses and strengths in the DOM
+const renderPokemonWeaknesses = (weaknesses) => {
+  const weaknessesBox = document.querySelector('.pokemon_weaknesses');
+  weaknessesBox.innerHTML = '';
+  if (!Array.isArray(weaknesses) || weaknesses.length === 0) {
+    weaknessesBox.innerHTML = 'N/A';
+    return;
+  }
+  if (weaknessesBox) {
+    weaknesses.forEach(weakness => {
+      const weaknessElement = document.createElement('div');
+      weaknessElement.textContent = weakness;
+      weaknessElement.classList.add('pokemon_weakness');
+      weaknessElement.classList.add(`pokemon_type_${weakness}`);
+      weaknessesBox.appendChild(weaknessElement);
+    });
+  }
+};
+
+
+const renderPokemonStrengths = (strengths) => {
+  const strengthsBox = document.querySelector('.pokemon_strengths');
+  strengthsBox.innerHTML = '';
+  if (!Array.isArray(strengths) || strengths.length === 0) {
+    strengthsBox.innerHTML = 'None';
+    return;
+  }
+  if (strengthsBox) {
+    strengths.forEach(strength => {
+      const strengthElement = document.createElement('div');
+      strengthElement.textContent = strength;
+      strengthElement.classList.add('pokemon_strength');
+      strengthElement.classList.add(`pokemon_type_${strength}`);
+      strengthsBox.appendChild(strengthElement);
+    });
+  }
+};
+
+
+
 const renderPokemon = async (pokemon) => {
   loading_image.style.display = 'block';
   pokemon_image.style.display = 'none';
@@ -157,15 +226,38 @@ const renderPokemon = async (pokemon) => {
   btn_prev.disabled = true;
   btn_random.disabled = true;
 
-
   //If pokemon shiny then button active
   toggleShinyButton.classList.toggle('active', isShiny);
 
   const data = await fetchPokemon(pokemon);
-  if (data === null) {
+  if (!data) {
     const healthBarHTML = createHealthBar(0, 0); // Pass 0 as the first parameter to display 0 HP
     document.querySelector('.health_bar_container').innerHTML = healthBarHTML;
   } else {
+    const name = data.name;
+    const types = data.types;
+    const imageUrl = isShiny ? data.sprites.front_shiny : data.sprites.front_default;
+
+    renderPokemonData(name, types);
+    renderPokemonImage(imageUrl);
+
+    const typeUrls = types.map(type => type.type.url);
+
+    Promise.all(typeUrls.map(url => fetch(url)))
+      .then(responses => Promise.all(responses.map(response => response.json())))
+      .then(types => {
+        const weaknesses = new Set();
+        const strengths = new Set();
+
+        types.forEach(type => {
+          type.damage_relations.double_damage_from.forEach(weakness => weaknesses.add(weakness.name));
+          type.damage_relations.double_damage_to.forEach(strength => strengths.add(strength.name));
+        });
+
+        renderPokemonWeaknesses(Array.from(weaknesses));
+        renderPokemonStrengths(Array.from(strengths));
+      });
+
     updatePokemonData(data);
     const pokemonData = createPokemonData(data);
     const healthBarHTML = createHealthBar(pokemonData.hp, pokemonData.maxHp);
@@ -186,7 +278,9 @@ const renderPokemon = async (pokemon) => {
   btn_next.disabled = false;
   btn_prev.disabled = false;
   btn_random.disabled = false;
-};
+};  
+
+
 // Handle the "Next" button click
 const handleNext = async () => {
   if (currentPokemon === 1010) {
@@ -282,6 +376,7 @@ const createHealthBar = (pokemonHp, pokemonMaxHp) => {
   `;
   return healthBarHTML;
 };
+
 
 //Clean placeholder on click
 

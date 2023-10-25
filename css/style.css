@@ -324,7 +324,7 @@ main {
 
 }
 
-.pokemon_matchups {
+.pokemon_effectiveness {
   position: absolute;
   top: 50%;
   left: 70%;
@@ -333,27 +333,83 @@ main {
   width: 7px;
 }
 
-.pokemon_weakness,
-.pokemon_strength { 
-  display: inline-block;
-  width: 180px;
-  /* Set a fixed width */
-  padding: 4px 18px;
-  margin: 4px;
+.not_very_effective{ 
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin: 4px 0 0;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
-  box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 36, 36, 0.522); /* altere este valor para ajustar a opacidade */
+  opacity: 0.9; /* altere este valor para ajustar a opacidade */
 }
-.pokemon_weaknesses_box {
-  background-color: #e25c53;
+.super_effective { 
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin: 4px 0 0;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: rgba(22, 255, 45, 0.537); /* altere este valor para ajustar a opacidade */
+  opacity: 0.9; /* altere este valor para ajustar a opacidade */
 }
 
-.pokemon_strengths_box {
-  background-color: #65d669;
+@media (max-width: 767px) {
+  .pokemon_effectiveness {
+    position: relative;
+    top: auto;
+    left: 46.5%;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 7px;
+    
+  }
 }
 
-.pokemon_matchups .pokemon_strengths_box h2 {
-  color: green;
+.super_effective:hover::before,
+.not_very_effective:hover::before {
+  content: attr(data-multiplier);
+  display: block;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  white-space: nowrap;
+  margin-top: -20px; /* Ajuste a posição vertical conforme necessário */
+  margin-left: 10px; /* Ajuste a posição horizontal conforme necessário */
+}
+
+.super_effective:hover {
+  position: relative;
+}
+
+.not_very_effective:hover {
+  position: relative;
+}
+
+
+.super_effective_box{
+  box-shadow: 0 0 6px #00ff44;
+  height: auto;
+  width: 220px;
+  background-color: rgba(148, 255, 164, 0.677);
+  padding: 4px;
+  margin: 14px;
+}
+
+.not_very_effective_box {
+  box-shadow: 0 0 6px hwb(0 59% 0%);
+  height: auto;
+  width: 220px;
+  background-color: rgba(255, 122, 122, 0.677); /* altere este valor para ajustar a opacidade da cor de fundo */
+  padding: 4px;
+  margin: 14px;
 }

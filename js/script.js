@@ -31,6 +31,19 @@ toggleShinyButton.addEventListener('click', async () => {
 
 });
 
+async function fetchTypeData(type) {
+  try {
+    const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching type data:', error);
+    return null;
+  }
+}
 
 // Define the fetchPokemon function
 const fetchPokemon = async (pokemon) => {
@@ -124,95 +137,146 @@ const renderPokemonTypes = (types) => {
   });
 };
 
-const types = {
-  NORMAL: { weaknesses: ['FIGHTING'], strengths: [] },
-  FIGHTING: { weaknesses: ['FLYING', 'PSYCHIC', 'FAIRY'], strengths: ['NORMAL', 'ROCK', 'STEEL', 'ICE', 'DARK'] },
-  FLYING: { weaknesses: ['ROCK', 'ELECTRIC', 'ICE'], strengths: ['FIGHTING', 'BUG', 'GRASS'] },
-  POISON: { weaknesses: ['GROUND', 'PSYCHIC'], strengths: ['GRASS', 'FAIRY'] },
-  GROUND: { weaknesses: ['WATER', 'GRASS', 'ICE'], strengths: ['POISON', 'ROCK', 'STEEL', 'FIRE', 'ELECTRIC'] },
-  ROCK: { weaknesses: ['FIGHTING', 'GROUND', 'STEEL', 'WATER', 'GRASS'], strengths: ['FLYING', 'BUG', 'FIRE', 'ICE'] },
-  BUG: { weaknesses: ['FLYING', 'ROCK', 'FIRE'], strengths: ['GRASS', 'PSYCHIC', 'DARK'] },
-  GHOST: { weaknesses: ['GHOST', 'DARK'], strengths: ['PSYCHIC', 'GHOST'] },
-  STEEL: { weaknesses: ['FIGHTING', 'GROUND', 'FIRE'], strengths: ['ROCK', 'ICE', 'FAIRY'] },
-  FIRE: { weaknesses: ['GROUND', 'ROCK', 'WATER'], strengths: ['BUG', 'STEEL', 'GRASS', 'ICE'] },
-  WATER: { weaknesses: ['GRASS', 'ELECTRIC'], strengths: ['GROUND', 'ROCK', 'FIRE'] },
-  GRASS: { weaknesses: ['FLYING', 'POISON', 'BUG', 'FIRE', 'ICE'], strengths: ['GROUND', 'ROCK', 'WATER'] },
-  ELECTRIC: { weaknesses: ['GROUND'], strengths: ['FLYING', 'WATER'] },
-  PSYCHIC: { weaknesses: ['BUG', 'GHOST', 'DARK'], strengths: ['FIGHTING', 'POISON'] },
-  ICE: { weaknesses: ['FIGHTING', 'ROCK', 'STEEL', 'FIRE'], strengths: ['FLYING', 'GROUND', 'GRASS', 'DRAGON'] },
-  DRAGON: { weaknesses: ['ICE', 'DRAGON', 'FAIRY'], strengths: ['DRAGON'] },
-  DARK: { weaknesses: ['FIGHTING', 'BUG', 'FAIRY'], strengths: ['GHOST', 'PSYCHIC'] },
-  FAIRY: { weaknesses: ['POISON', 'STEEL'], strengths: ['FIGHTING', 'DRAGON', 'DARK'] },
+const typeChart = {
+  NORMAL: {
+    superEffective: [],
+    notVeryEffective: ['ROCK', 'STEEL'],
+    immune: ['GHOST'],
+  },
+  FIGHTING: {
+    superEffective: ['NORMAL', 'ROCK', 'STEEL', 'ICE', 'DARK'],
+    notVeryEffective: ['FLYING', 'BUG', 'POISON', 'PSYCHIC', 'FAIRY'],
+    immune: [],
+  },
+  FLYING: {
+    superEffective: ['FIGHTING', 'BUG', 'GRASS'],
+    notVeryEffective: ['ROCK', 'ELECTRIC', 'STEEL'],
+    immune: [],
+  },
+  POISON: {
+    superEffective: ['GRASS', 'FAIRY'],
+    notVeryEffective: ['POISON', 'GROUND', 'ROCK', 'GHOST'],
+    immune: ['STEEL'],
+  },
+  GROUND: {
+    superEffective: ['POISON', 'ROCK', 'STEEL', 'FIRE'],
+    notVeryEffective: ['BUG'],
+    immune: ['ELECTRIC'],
+  },
+  ROCK: {
+    superEffective: ['FLYING', 'BUG', 'FIRE', 'ICE'],
+    notVeryEffective: ['FIGHTING', 'GROUND', 'STEEL'],
+    immune: [],
+  },
+  BUG: {
+    superEffective: ['GRASS', 'PSYCHIC', 'DARK'],
+    notVeryEffective: ['FIGHTING', 'FLYING', 'POISON', 'GHOST', 'STEEL', 'FIRE', 'FAIRY'],
+    immune: [],
+  },
+  GHOST: {
+    superEffective: ['GHOST', 'PSYCHIC'],
+    notVeryEffective: ['DARK'],
+    immune: ['NORMAL'],
+  },
+  STEEL: {
+    superEffective: ['ROCK', 'ICE', 'FAIRY'],
+    notVeryEffective: ['STEEL', 'FIRE', 'WATER', 'ELECTRIC'],
+    immune: [],
+  },
+  FIRE: {
+    superEffective: ['BUG', 'STEEL', 'GRASS', 'ICE'],
+    notVeryEffective: ['ROCK', 'FIRE', 'WATER', 'DRAGON'],
+    immune: [],
+  },
+  WATER: {
+    superEffective: ['GROUND', 'ROCK', 'FIRE'],
+    notVeryEffective: ['WATER', 'GRASS', 'ELECTRIC'],
+    immune: [],
+  },
+  GRASS: {
+    superEffective: ['GROUND', 'ROCK', 'WATER'],
+    notVeryEffective: ['FLYING', 'POISON', 'BUG', 'STEEL', 'FIRE', 'GRASS', 'DRAGON'],
+    immune: [],
+  },
+  ELECTRIC: {
+    superEffective: ['FLYING', 'WATER'],
+    notVeryEffective: ['GROUND', 'ELECTRIC', 'DRAGON'],
+    immune: [],
+  },
+  PSYCHIC: {
+    superEffective: ['FIGHTING', 'POISON'],
+    notVeryEffective: ['STEEL', 'PSYCHIC'],
+    immune: ['DARK'],
+  },
+  ICE: {
+    superEffective: ['FLYING', 'GROUND', 'GRASS', 'DRAGON'],
+    notVeryEffective: ['STEEL', 'FIRE', 'WATER', 'ICE'],
+    immune: [],
+  },
+  DRAGON: {
+    superEffective: ['DRAGON'],
+    notVeryEffective: ['STEEL'],
+    immune: ['FAIRY'],
+  },
+  DARK: {
+    superEffective: ['GHOST', 'PSYCHIC'],
+    notVeryEffective: ['FIGHTING', 'DARK', 'FAIRY'],
+    immune: [],
+  },
+  FAIRY: {
+    superEffective: ['FIGHTING', 'DRAGON', 'DARK'],
+    notVeryEffective: ['POISON', 'STEEL', 'FIRE'],
+    immune: [],
+  },
 };
+function calculateMoveEffectiveness(moveType, pokemonTypes) {
+  let effectiveness = 1;
 
-function calculateMultipliers(attackingType, defendingTypes) {
-  var weaknesses = new Set();
-  var strengths = new Set();
-
-  defendingTypes.forEach(function(defendingType) {
-    var multiplier = 1;
-    types[defendingType].weaknesses.forEach(function(weakness) {
-      if (weakness === attackingType && !weaknesses.has(defendingType)) {
-        strengths.delete(defendingType);
-        weaknesses.add(defendingType);
-      } else if (!strengths.has(defendingType)) {
-        multiplier *= 2;
-        strengths.add(defendingType);
-      }
-    });
-    types[defendingType].strengths.forEach(function(strength) {
-      if (strength === attackingType && !strengths.has(defendingType)) {
-        weaknesses.delete(defendingType);
-        strengths.add(defendingType);
-      } else if (!weaknesses.has(defendingType)) {
-        multiplier *= 0.5;
-        weaknesses.add(defendingType);
-      }
-    });
+  pokemonTypes.forEach((type) => {
+    const typeEffectiveness = typeChart[moveType][type];
+    effectiveness *= typeEffectiveness;
   });
 
-  return {
-    weaknesses: Array.from(weaknesses),
-    strengths: Array.from(strengths),
-  };
+  return effectiveness;
 }
 
+
+
 // Render the Pokemon weaknesses and strengths in the DOM
-const renderPokemonWeaknesses = (weaknesses) => {
-  const weaknessesBox = document.querySelector('.pokemon_weaknesses');
-  weaknessesBox.innerHTML = '';
-  if (!Array.isArray(weaknesses) || weaknesses.length === 0) {
-    weaknessesBox.innerHTML = 'N/A';
-    return;
+const renderPokemonStrengths = (strengths) => {
+  const strengthsBox = document.querySelector('.super_effective');
+  strengthsBox.innerHTML = '';
+
+  if (!Array.isArray(strengths) || strengths.length === 0) {
+    strengthsBox.textContent = 'None';
+  } else {
+    strengths.forEach(strength => {
+      const strengthElement = createTypeElement(strength);
+      strengthsBox.appendChild(strengthElement);
+    });
   }
-  if (weaknessesBox) {
+};
+
+const renderPokemonWeaknesses = (weaknesses) => {
+  const weaknessesBox = document.querySelector('.not_very_effective');
+  weaknessesBox.innerHTML = '';
+
+  if (!Array.isArray(weaknesses) || weaknesses.length === 0) {
+    weaknessesBox.textContent = 'N/A';
+  } else {
     weaknesses.forEach(weakness => {
-      const weaknessElement = document.createElement('div');
-      weaknessElement.textContent = weakness;
-      weaknessElement.classList.add('pokemon_weakness');
-      weaknessElement.classList.add(`pokemon_type_${weakness}`);
+      const weaknessElement = createTypeElement(weakness);
       weaknessesBox.appendChild(weaknessElement);
     });
   }
 };
 
-
-const renderPokemonStrengths = (strengths) => {
-  const strengthsBox = document.querySelector('.pokemon_strengths');
-  strengthsBox.innerHTML = '';
-  if (!Array.isArray(strengths) || strengths.length === 0) {
-    strengthsBox.innerHTML = 'None';
-    return;
-  }
-  if (strengthsBox) {
-    strengths.forEach(strength => {
-      const strengthElement = document.createElement('div');
-      strengthElement.textContent = strength;
-      strengthElement.classList.add('pokemon_strength');
-      strengthElement.classList.add(`pokemon_type_${strength}`);
-      strengthsBox.appendChild(strengthElement);
-    });
-  }
+const createTypeElement = (type) => {
+  const typeElement = document.createElement('div');
+  typeElement.textContent = type;
+  typeElement.classList.add('pokemon_type');
+  typeElement.classList.add(`pokemon_type_${type}`);
+  return typeElement;
 };
 
 
@@ -244,20 +308,26 @@ const renderPokemon = async (pokemon) => {
     const typeUrls = types.map(type => type.type.url);
 
     Promise.all(typeUrls.map(url => fetch(url)))
-      .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(types => {
-        const weaknesses = new Set();
-        const strengths = new Set();
+    .then(responses => Promise.all(responses.map(response => response.json())))
+    .then(types => {
+      const weaknesses = new Set();
+      const strengths = new Set();
 
-        types.forEach(type => {
-          type.damage_relations.double_damage_from.forEach(weakness => weaknesses.add(weakness.name));
-          type.damage_relations.double_damage_to.forEach(strength => strengths.add(strength.name));
-        });
-
-        renderPokemonWeaknesses(Array.from(weaknesses));
-        renderPokemonStrengths(Array.from(strengths));
+      types.forEach(type => {
+        type.damage_relations.double_damage_from.forEach(weakness => weaknesses.add(weakness.name));
+        type.damage_relations.double_damage_to.forEach(strength => strengths.add(strength.name));
       });
 
+      const superEffectiveTypes = Array.from(strengths);
+      const notVeryEffectiveTypes = Array.from(weaknesses);
+
+      // Remove tipos presentes tanto em superEffectiveTypes quanto em notVeryEffectiveTypes
+      const uniqueSuperEffectiveTypes = superEffectiveTypes.filter(type => !notVeryEffectiveTypes.includes(type));
+      const uniqueNotVeryEffectiveTypes = notVeryEffectiveTypes.filter(type => !superEffectiveTypes.includes(type));
+
+      renderPokemonWeaknesses(uniqueNotVeryEffectiveTypes);
+      renderPokemonStrengths(uniqueSuperEffectiveTypes);
+    });
     updatePokemonData(data);
     const pokemonData = createPokemonData(data);
     const healthBarHTML = createHealthBar(pokemonData.hp, pokemonData.maxHp);
@@ -278,7 +348,8 @@ const renderPokemon = async (pokemon) => {
   btn_next.disabled = false;
   btn_prev.disabled = false;
   btn_random.disabled = false;
-};  
+};
+
 
 
 // Handle the "Next" button click
@@ -412,12 +483,30 @@ const handleShiny = async () => {
   }
 };
 
+// Seletor para todos os elementos com classe "not_very_effective"
+const notVeryEffectiveElements = document.querySelectorAll('.not_very_effective .types');
+
+// Adicionar eventos de mouseover e mouseout a cada elemento
+notVeryEffectiveElements.forEach((element) => {
+  const types = element.textContent; // Obter o nome do tipo
+  const multiplier = "0.5x"; // Substitua isso pelo seu cálculo de multiplicador
+
+  element.addEventListener('mouseover', () => {
+    showTooltip(element, `Multiplier: ${multiplier}`);
+  });
+
+  element.addEventListener('mouseout', () => {
+    hideTooltip(element);
+  });
+});
+
 // Add event listeners
 btn_prev.addEventListener('click', handlePrev);
 btn_next.addEventListener('click', handleNext);
 btn_random.addEventListener('click', handleRandom);
 form.addEventListener('submit', handleSearch);
 input_search.addEventListener('keydown', handleSecretCode);
+
 
 // Render a random Pokemon on page load
 handleRandom();

@@ -339,7 +339,7 @@ main {
   padding: 8px;
   margin: 4px 0 0;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
   background-color: rgba(255, 36, 36, 0.522); /* altere este valor para ajustar a opacidade */
@@ -351,12 +351,13 @@ main {
   padding: 8px;
   margin: 4px 0 0;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
   background-color: rgba(22, 255, 45, 0.537); /* altere este valor para ajustar a opacidade */
   opacity: 0.9; /* altere este valor para ajustar a opacidade */
 }
+
 
 @media (max-width: 767px) {
   .pokemon_effectiveness {

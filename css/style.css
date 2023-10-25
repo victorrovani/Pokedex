@@ -358,6 +358,19 @@ main {
   opacity: 0.9; /* altere este valor para ajustar a opacidade */
 }
 
+.immune { 
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin: 4px 0 0;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: rgba(107, 107, 107, 0.537); /* altere este valor para ajustar a opacidade */
+  opacity: 0.9; /* altere este valor para ajustar a opacidade */
+}
+
 
 @media (max-width: 767px) {
   .pokemon_effectiveness {
@@ -373,6 +386,7 @@ main {
   }
 }
 
+.immune:hover::before,
 .super_effective:hover::before,
 .not_very_effective:hover::before {
   content: attr(data-multiplier);
@@ -396,7 +410,6 @@ main {
   position: relative;
 }
 
-
 .super_effective_box{
   box-shadow: 0 0 6px #00ff44;
   height: auto;
@@ -411,6 +424,15 @@ main {
   height: auto;
   width: 220px;
   background-color: rgba(255, 122, 122, 0.677); /* altere este valor para ajustar a opacidade da cor de fundo */
+  padding: 4px;
+  margin: 14px;
+}
+
+.immune_box {
+  box-shadow: 0 0 6px hwb(0 58% 42%);
+  height: auto;
+  width: 220px;
+  background-color: rgba(138, 138, 138, 0.677); /* altere este valor para ajustar a opacidade da cor de fundo */
   padding: 4px;
   margin: 14px;
 }

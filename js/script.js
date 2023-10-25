@@ -240,9 +240,6 @@ function calculateMoveEffectiveness(moveType, pokemonTypes) {
   return effectiveness;
 }
 
-
-
-// Render the Pokemon weaknesses and strengths in the DOM
 const renderPokemonStrengths = (strengths) => {
   const strengthsBox = document.querySelector('.super_effective');
   strengthsBox.innerHTML = '';
@@ -271,6 +268,9 @@ const renderPokemonWeaknesses = (weaknesses) => {
   }
 };
 
+
+
+
 const createTypeElement = (type) => {
   const typeElement = document.createElement('div');
   typeElement.textContent = type;
@@ -280,6 +280,20 @@ const createTypeElement = (type) => {
 };
 
 
+// Adicione esta função para renderizar os tipos imunes
+const renderPokemonImmunity = (immunity) => {
+  const immunityBox = document.querySelector('.immune');
+  immunityBox.innerHTML = '';
+
+  if (!Array.isArray(immunity) || immunity.length === 0) {
+    immunityBox.textContent = 'N/A';
+  } else {
+    immunity.forEach(immuneType => {
+      const immunityElement = createTypeElement(immuneType);
+      immunityBox.appendChild(immunityElement);
+    });
+  }
+};
 
 const renderPokemon = async (pokemon) => {
   loading_image.style.display = 'block';
@@ -290,12 +304,11 @@ const renderPokemon = async (pokemon) => {
   btn_prev.disabled = true;
   btn_random.disabled = true;
 
-  //If pokemon shiny then button active
   toggleShinyButton.classList.toggle('active', isShiny);
 
   const data = await fetchPokemon(pokemon);
   if (!data) {
-    const healthBarHTML = createHealthBar(0, 0); // Pass 0 as the first parameter to display 0 HP
+    const healthBarHTML = createHealthBar(0, 0);
     document.querySelector('.health_bar_container').innerHTML = healthBarHTML;
   } else {
     const name = data.name;
@@ -308,26 +321,31 @@ const renderPokemon = async (pokemon) => {
     const typeUrls = types.map(type => type.type.url);
 
     Promise.all(typeUrls.map(url => fetch(url)))
-    .then(responses => Promise.all(responses.map(response => response.json())))
-    .then(types => {
-      const weaknesses = new Set();
-      const strengths = new Set();
+      .then(responses => Promise.all(responses.map(response => response.json())))
+      .then(types => {
+        const weaknesses = new Set();
+        const strengths = new Set();
+        const immunity = new Set(); // Adicione isso para capturar tipos imunes
 
-      types.forEach(type => {
-        type.damage_relations.double_damage_from.forEach(weakness => weaknesses.add(weakness.name));
-        type.damage_relations.double_damage_to.forEach(strength => strengths.add(strength.name));
+        types.forEach(type => {
+          type.damage_relations.double_damage_from.forEach(weakness => weaknesses.add(weakness.name));
+          type.damage_relations.double_damage_to.forEach(strength => strengths.add(strength.name));
+          type.damage_relations.no_damage_from.forEach(immune => immunity.add(immune.name)); // Adicione tipos imunes
+        });
+
+        const superEffectiveTypes = Array.from(strengths);
+        const notVeryEffectiveTypes = Array.from(weaknesses);
+        const immuneTypes = Array.from(immunity); // Converta o conjunto de tipos imunes em um array
+
+        // Remove tipos presentes tanto em superEffectiveTypes quanto em notVeryEffectiveTypes
+        const uniqueSuperEffectiveTypes = superEffectiveTypes.filter(type => !notVeryEffectiveTypes.includes(type));
+        const uniqueNotVeryEffectiveTypes = notVeryEffectiveTypes.filter(type => !superEffectiveTypes.includes(type));
+
+        renderPokemonWeaknesses(uniqueNotVeryEffectiveTypes);
+        renderPokemonStrengths(uniqueSuperEffectiveTypes);
+        renderPokemonImmunity(immuneTypes); // Renderize os tipos imunes
       });
 
-      const superEffectiveTypes = Array.from(strengths);
-      const notVeryEffectiveTypes = Array.from(weaknesses);
-
-      // Remove tipos presentes tanto em superEffectiveTypes quanto em notVeryEffectiveTypes
-      const uniqueSuperEffectiveTypes = superEffectiveTypes.filter(type => !notVeryEffectiveTypes.includes(type));
-      const uniqueNotVeryEffectiveTypes = notVeryEffectiveTypes.filter(type => !superEffectiveTypes.includes(type));
-
-      renderPokemonWeaknesses(uniqueNotVeryEffectiveTypes);
-      renderPokemonStrengths(uniqueSuperEffectiveTypes);
-    });
     updatePokemonData(data);
     const pokemonData = createPokemonData(data);
     const healthBarHTML = createHealthBar(pokemonData.hp, pokemonData.maxHp);
@@ -349,7 +367,6 @@ const renderPokemon = async (pokemon) => {
   btn_prev.disabled = false;
   btn_random.disabled = false;
 };
-
 
 
 // Handle the "Next" button click

@@ -293,13 +293,13 @@ main {
 
 #toggle-shiny {
   position: absolute;
-  border-radius: 32%;
-  background-color: #f44336;
+  border-radius: 13%;
+  background-color: #efefef;
   font-size: 20px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  top: 25.2%;
-  right: 47.8%;
+  top: 12%;
+  right: 20%;
   transform: translateY(-50%);
   width: 60px;
   height: 32px;
@@ -325,13 +325,32 @@ main {
 }
 
 .pokemon_effectiveness {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 7px;
   position: absolute;
   top: 50%;
-  left: 70%;
-  transform: translateX(100%);
   transform: translateY(-50%);
-  width: 7px;
 }
+
+@media (max-width: 767px) {
+  .pokemon_effectiveness {
+    position: relative;
+    top: 200px;
+    left: 46.5%; /* Ajuste as coordenadas para telas menores */
+  }
+}
+
+@media (min-width: 768px) {
+  .pokemon_effectiveness {
+    left: 80%; /* Ajuste as coordenadas para telas maiores */
+  }
+}
+
+
+
+
 
 .not_very_effective{ 
   display: block;
@@ -372,19 +391,6 @@ main {
 }
 
 
-@media (max-width: 767px) {
-  .pokemon_effectiveness {
-    position: relative;
-    top: auto;
-    left: 46.5%;
-    transform: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 7px;
-    
-  }
-}
 
 .immune:hover::before,
 .super_effective:hover::before,

@@ -53,12 +53,40 @@ const fetchPokemon = async (pokemon) => {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    return data;
+
+    // Buscar informações da evolução
+    const speciesResponse = await fetch(data.species.url);
+    const speciesData = await speciesResponse.json();
+
+    const evolutionChainResponse = await fetch(speciesData.evolution_chain.url);
+    const evolutionChainData = await evolutionChainResponse.json();
+
+    return { ...data, evolutionChain: evolutionChainData };
   } catch (error) {
     console.error('Error fetching Pokemon data:', error);
     return null;
   }
 };
+
+const fetchEvolutionDetails = async (evolutionChain, speciesName) => {
+  // Percorra a cadeia de evolução para encontrar o Pokémon específico
+  const findPokemonInChain = (chain, name) => {
+    if (chain.species.name === name) {
+      return chain;
+    }
+    for (const link of chain.evolves_to) {
+      const result = findPokemonInChain(link, name);
+      if (result) {
+        return result;
+      }
+    }
+    return null;
+  };
+
+  const specificPokemonChain = findPokemonInChain(evolutionChain.chain, speciesName);
+  return specificPokemonChain ? specificPokemonChain.evolution_details : [];
+};
+
 
 const renderPokemonData = (name, types) => {
   const pokemonNumber = currentPokemon.toString().padStart(3, '0');
@@ -367,7 +395,6 @@ const renderPokemon = async (pokemon) => {
   btn_prev.disabled = false;
   btn_random.disabled = false;
 };
-
 
 // Handle the "Next" button click
 const handleNext = async () => {

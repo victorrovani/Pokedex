@@ -35,8 +35,9 @@ main {
 
 #toggleAudioBtn{
   position: absolute;
-  left: 48.5%;
-  background-color: #ff3e3ed9; /* cor de fundo vermelha */
+  left: 55%;
+  top: 8.3%;
+  background-color: #b42d2dd9; /* cor de fundo vermelha */
   border: none;
   color: white; /* cor do texto */
   padding: 10px 20px; /* espaçamento interno */
@@ -48,10 +49,11 @@ main {
   cursor: pointer;
   border-radius: 12px; /* bordas arredondadas */
   transition: background-color 0.3s; /* transição suave para hover */
+  z-index: 2;
 }
 
 #toggleAudioBtn:hover {
-  background-color: #f30000c9; /* cor de fundo um pouco mais escura no hover */
+  background-color: #740a0ac9; /* cor de fundo um pouco mais escura no hover */
 }
 
 
@@ -120,7 +122,8 @@ main {
 .pokemon_name {
   color: hsl(0, 0%, 12%);
   text-transform: capitalize;
-  font-size: 16px;
+  font-size: 14px;
+  margin-bottom: 3px;
 }
 
 /* Style the Pokémon number */

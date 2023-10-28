@@ -165,98 +165,6 @@ const renderPokemonTypes = (types) => {
   });
 };
 
-const typeChart = {
-  NORMAL: {
-    superEffective: [],
-    notVeryEffective: ['ROCK', 'STEEL'],
-    immune: ['GHOST'],
-  },
-  FIGHTING: {
-    superEffective: ['NORMAL', 'ROCK', 'STEEL', 'ICE', 'DARK'],
-    notVeryEffective: ['FLYING', 'BUG', 'POISON', 'PSYCHIC', 'FAIRY'],
-    immune: [],
-  },
-  FLYING: {
-    superEffective: ['FIGHTING', 'BUG', 'GRASS'],
-    notVeryEffective: ['ROCK', 'ELECTRIC', 'STEEL'],
-    immune: [],
-  },
-  POISON: {
-    superEffective: ['GRASS', 'FAIRY'],
-    notVeryEffective: ['POISON', 'GROUND', 'ROCK', 'GHOST'],
-    immune: ['STEEL'],
-  },
-  GROUND: {
-    superEffective: ['POISON', 'ROCK', 'STEEL', 'FIRE'],
-    notVeryEffective: ['BUG'],
-    immune: ['ELECTRIC'],
-  },
-  ROCK: {
-    superEffective: ['FLYING', 'BUG', 'FIRE', 'ICE'],
-    notVeryEffective: ['FIGHTING', 'GROUND', 'STEEL'],
-    immune: [],
-  },
-  BUG: {
-    superEffective: ['GRASS', 'PSYCHIC', 'DARK'],
-    notVeryEffective: ['FIGHTING', 'FLYING', 'POISON', 'GHOST', 'STEEL', 'FIRE', 'FAIRY'],
-    immune: [],
-  },
-  GHOST: {
-    superEffective: ['GHOST', 'PSYCHIC'],
-    notVeryEffective: ['DARK'],
-    immune: ['NORMAL'],
-  },
-  STEEL: {
-    superEffective: ['ROCK', 'ICE', 'FAIRY'],
-    notVeryEffective: ['STEEL', 'FIRE', 'WATER', 'ELECTRIC'],
-    immune: [],
-  },
-  FIRE: {
-    superEffective: ['BUG', 'STEEL', 'GRASS', 'ICE'],
-    notVeryEffective: ['ROCK', 'FIRE', 'WATER', 'DRAGON'],
-    immune: [],
-  },
-  WATER: {
-    superEffective: ['GROUND', 'ROCK', 'FIRE'],
-    notVeryEffective: ['WATER', 'GRASS', 'ELECTRIC'],
-    immune: [],
-  },
-  GRASS: {
-    superEffective: ['GROUND', 'ROCK', 'WATER'],
-    notVeryEffective: ['FLYING', 'POISON', 'BUG', 'STEEL', 'FIRE', 'GRASS', 'DRAGON'],
-    immune: [],
-  },
-  ELECTRIC: {
-    superEffective: ['FLYING', 'WATER'],
-    notVeryEffective: ['GROUND', 'ELECTRIC', 'DRAGON'],
-    immune: [],
-  },
-  PSYCHIC: {
-    superEffective: ['FIGHTING', 'POISON'],
-    notVeryEffective: ['STEEL', 'PSYCHIC'],
-    immune: ['DARK'],
-  },
-  ICE: {
-    superEffective: ['FLYING', 'GROUND', 'GRASS', 'DRAGON'],
-    notVeryEffective: ['STEEL', 'FIRE', 'WATER', 'ICE'],
-    immune: [],
-  },
-  DRAGON: {
-    superEffective: ['DRAGON'],
-    notVeryEffective: ['STEEL'],
-    immune: ['FAIRY'],
-  },
-  DARK: {
-    superEffective: ['GHOST', 'PSYCHIC'],
-    notVeryEffective: ['FIGHTING', 'DARK', 'FAIRY'],
-    immune: [],
-  },
-  FAIRY: {
-    superEffective: ['FIGHTING', 'DRAGON', 'DARK'],
-    notVeryEffective: ['POISON', 'STEEL', 'FIRE'],
-    immune: [],
-  },
-};
 function calculateMoveEffectiveness(moveType, pokemonTypes) {
   let effectiveness = 1;
 
@@ -322,6 +230,38 @@ const renderPokemonImmunity = (immunity) => {
     });
   }
 };
+
+document.body.addEventListener("click", playMusicFirstTime);
+
+function playMusicFirstTime() {
+    var bgMusic = document.getElementById("bgMusic");
+    if (bgMusic.paused) {
+        bgMusic.play();
+    }
+    document.body.removeEventListener("click", playMusicFirstTime);
+}
+
+document.getElementById("toggleAudioBtn").addEventListener("click", function() {
+  var bgMusic = document.getElementById("bgMusic");
+  var icon = this.querySelector("i");
+  if (bgMusic.paused) {
+      bgMusic.play();
+      icon.classList.remove("fa-volume-mute");
+      icon.classList.add("fa-volume-up");
+  } else {
+      bgMusic.pause();
+      icon.classList.remove("fa-volume-up");
+      icon.classList.add("fa-volume-mute");
+  }
+});
+
+var bgMusic = document.getElementById("bgMusic");
+bgMusic.volume = 0.15;
+
+
+
+
+
 
 const renderPokemon = async (pokemon) => {
   loading_image.style.display = 'block';

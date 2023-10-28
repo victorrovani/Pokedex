@@ -6,23 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" sizes="16x16" href="images/Pokedex_icon.png">
     <link rel="stylesheet" sizes="16x16" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Pokedex</title>
 </head>
 
 <body>
+    
+    <audio id="bgMusic" loop>
+        <source src="/assets/backaudio.mp4" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <button id="toggleAudioBtn"><i class="fas fa-volume-up"></i></button>
+    
+    
+    
     <main>
+        
         <img alt="pokemon" class="missingno" src="images/missingno.png" style="display: none;">
-        <img alt="pokemon" class="pokemon_image" style="display: none;">
         <img src="images/loading-gif.gif" alt="loading" class="loading_image">
-        <img src="images/pokedex1.png" alt="pokedex" class="pokedex" draggable="false">
-        <div class="pokemon_image_container"></div>
+        <img src="images/pokedex2.png" alt="pokedex" class="pokedex" draggable="false">
+
         <div id="toggle-shiny" title="Toggle Shiny">&#x1F31F;</div>
-        <div class="pokemon_data">
-            <div class="health_bar_container">
-                <div class="health_bar"></div>
-                <div class="bar"></div>
-                <div class="hp_text"></div>
-            </div>
+
+        <div class="pokemon_image_container"></div>
+         <img alt="pokemon" class="pokemon_image" style="display: none;">
+        <div class="pokemon_data_container"></div>
+            <div class="pokemon_data">
+             <div class="health_bar_container">
+                 <div class="health_bar"></div>
+                 <div class="hp_text"></div>
+             </div>
             <div class="pokemon_number"></div>
             <div class="pokemon_name"></div>
             <div class="pokemon_types"></div>
@@ -33,14 +46,14 @@
         </form>
         <div class="buttons">
             <button class="button btn-prev">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: khaki;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
                     <title>arrow-left-bold</title>
                     <path d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z" />
                 </svg>
             </button>
             <button class="button btn-random"><img id="dice-image" src="images/dices/dice-1.svg" /></button>
             <button class="button btn-next">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: khaki;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
                     <title>arrow-right-bold</title>
                     <path d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
                 </svg>

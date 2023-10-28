@@ -35,6 +35,7 @@ main {
 
 #toggleAudioBtn{
   position: absolute;
+  left: 48.5%;
   background-color: #ff3e3ed9; /* cor de fundo vermelha */
   border: none;
   color: white; /* cor do texto */
@@ -95,7 +96,7 @@ main {
 /* Style the Pokémon image */
 .pokemon_image {
   position: absolute;
-  bottom: 50%;
+  bottom: 51%;
   left: 50.7%;
   transform: translate(-63%, 20%);
   width: 12%;
@@ -135,9 +136,9 @@ main {
 /* Style the search form */
 .form {
   position: absolute;
-  width: 23%;
+  width: 26%;
   /*align middle*/
-  transform: translate(-6%, -10%);
+  transform: translate(-11%, -10%);
 
   background-color: hsl(0, 0%, 11%);
   top: 67%;
@@ -160,7 +161,7 @@ main {
 /* Style the search buttons */
 .buttons {
   position: absolute;
-  bottom: 12%;
+  bottom: 10%;
   left: 51%;
   width: 24%;
   transform: translate(-57%, 0);

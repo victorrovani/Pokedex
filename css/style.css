@@ -20,9 +20,10 @@
 body {
   position: relative;
   background: url('/images/Background.png') no-repeat center center fixed;
-  background-size: cover;
+  background-position: center; /* Centraliza a imagem */
+  background-repeat: no-repeat; /* Evita que a imagem seja repetida */
+  background-size: cover; /* Faz com que a imagem cubra todo o elemento */
   text-align: center;
-  min-height: 100vh;
 }
 
 /* Style the main content container */

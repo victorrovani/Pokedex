@@ -18,9 +18,9 @@
 
 /* Set the background color and text alignment for the body */
 body {
-  position:relative;
-  background: url('/images/Background.png') no-repeat center center fixed; 
-  background-size:cover;
+  position: relative;
+  background: url('/images/Background.png') no-repeat center center fixed;
+  background-size: cover;
   text-align: center;
   min-height: 100vh;
 }
@@ -33,27 +33,30 @@ main {
   position: relative
 }
 
-#toggleAudioBtn{
+#toggleAudioBtn {
   position: absolute;
   left: 55%;
   top: 8.3%;
-  background-color: #b42d2dd9; /* cor de fundo vermelha */
-  border: none;
-  color: white; /* cor do texto */
-  padding: 10px 20px; /* espaçamento interno */
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  background-color: #b42d2dd9;
+  /* cor de fundo vermelha */
+  border: #000 1px solid;
+  color: white;
+  /* cor do texto */
+  padding: 10px 20px;
+  /* espaçamento interno */
+  font-size: 1vw;
   margin: 4px 2px;
   cursor: pointer;
-  border-radius: 12px; /* bordas arredondadas */
-  transition: background-color 0.3s; /* transição suave para hover */
+  border-radius: 12px;
+  /* bordas arredondadas */
+  transition: background-color 0.3s;
+  /* transição suave para hover */
   z-index: 2;
 }
 
 #toggleAudioBtn:hover {
-  background-color: #740a0ac9; /* cor de fundo um pouco mais escura no hover */
+  background-color: #740a0ac9;
+  /* cor de fundo um pouco mais escura no hover */
 }
 
 
@@ -61,37 +64,49 @@ main {
 .pokedex {
   display: block;
   margin: 0 auto;
-  max-width: 36%;
+  max-width: 40%;
   user-select: none;
 }
 
-.pokemon_data_container{
-  background:linear-gradient(to bottom, hsl(0, 0%, 92%), hwb(0 49% 51%));background-size: cover;
+.pokemon_data_container {
+  background: linear-gradient(to bottom, hsl(0, 0%, 92%), hwb(0 49% 51%));
   background-size: cover;
-  position: absolute; /* Mudança aqui */
-  top: 58%; /* Comece no centro verticalmente */
-  left: 49.1%; /* Comece no centro horizontalmente */
-  transform: translate(-50%, -50%); /* Centraliza o contêiner */
+  background-size: cover;
+  position: absolute;
+  /* Mudança aqui */
+  top: 58%;
+  /* Comece no centro verticalmente */
+  left: 49.1%;
+  /* Comece no centro horizontalmente */
+  transform: translate(-50%, -50%);
+  /* Centraliza o contêiner */
   border-radius: 4%;
-  width: 329px; 
-  height: 90px;
+  width: 22vw;
+  height: 7vw;
   border: 1px solid #000;
-  z-index: 0; /* Adicionado para garantir que a imagem do Pokémon esteja acima */
+  z-index: 0;
+  /* Adicionado para garantir que a imagem do Pokémon esteja acima */
 }
 
 .pokemon_image_container {
   background: linear-gradient(to top, rgba(255, 255, 255, 0.595), transparent), url('/images/Paisagem16b.jpeg') no-repeat center center;
   background-size: cover;
-  position: absolute; /* Mudança aqui */
-  top: 40%; /* Comece no centro verticalmente */
-  left: 49.1%; /* Comece no centro horizontalmente */
-  transform: translate(-50%, -50%); /* Centraliza o contêiner */
-  box-shadow: #4545453a 0 0 0 2px inset; /* Adiciona uma sombra interna para o contêiner */
+  position: absolute;
+  /* Mudança aqui */
+  top: 40%;
+  /* Comece no centro verticalmente */
+  left: 49.1%;
+  /* Comece no centro horizontalmente */
+  transform: translate(-50%, -50%);
+  /* Centraliza o contêiner */
+  box-shadow: #4545453a 0 0 0 2px inset;
+  /* Adiciona uma sombra interna para o contêiner */
   border-radius: 4%;
-  width: 330px; 
-  height: 180px;
-  border:#000 1px solid;
-  z-index: 1; /* Adicionado para garantir que a imagem do Pokémon esteja acima */
+  width: 22vw;
+  height: 12vw;
+  border: #000 1px solid;
+  z-index: 1;
+  /* Adicionado para garantir que a imagem do Pokémon esteja acima */
 }
 
 
@@ -102,7 +117,8 @@ main {
   left: 50.7%;
   transform: translate(-63%, 20%);
   width: 12%;
-  z-index: 1;  /* Adicionado para garantir que a imagem do Pokémon esteja acima */
+  z-index: 1;
+  /* Adicionado para garantir que a imagem do Pokémon esteja acima */
 }
 
 
@@ -122,18 +138,18 @@ main {
 .pokemon_name {
   color: hsl(0, 0%, 12%);
   text-transform: capitalize;
-  font-size: 14px;
+  font-size: 1vw;
   margin-bottom: 3px;
 }
 
 /* Style the Pokémon number */
 .pokemon_number {
-  font-size: 15px;
+  font-size: 1vw;
 }
 
 /* Style the Pokémon types */
 .pokemon_types {
-  font-size: 15px;
+  font-size: 1vw;
 }
 
 /* Style the search form */
@@ -314,21 +330,26 @@ main {
 
 .health_bar_container {
   position: absolute;
-  top: -29%;
+  top: -40%;
   left: 0;
   height: 10px;
-  background-color: #ccc; /* isso representa a barra vazia */
+  background-color: #ccc;
+  /* isso representa a barra vazia */
   border: 1px solid #333;
   border-radius: 5px;
   box-shadow: 0 0 5px #24ff1c;
-  width: 100%; /* largura máxima */
+  width: 100%;
+  /* largura máxima */
 }
 
 .health_bar {
   height: 100%;
-  background-color: #81e944; /* isso representa a barra de saúde */
-  width: 100%; /* essa largura será ajustada dinamicamente com JavaScript */
-  border-radius: 4px; /* um pouco menos que o container para que se encaixe bem */
+  background-color: #81e944;
+  /* isso representa a barra de saúde */
+  width: 100%;
+  /* essa largura será ajustada dinamicamente com JavaScript */
+  border-radius: 4px;
+  /* um pouco menos que o container para que se encaixe bem */
 }
 
 .hp_text {
@@ -346,15 +367,14 @@ main {
 
 #toggle-shiny {
   position: absolute;
-  border-radius: 13%;
-  background-color: #ffffff;
+  border-radius: 100%;
+  background-color: #ffffff19;
   font-size: 20px;
-  box-shadow: 0 2px 2px rgb(255, 255, 255);
-  top: 16%;
-  right: 36%;
+  top: 13.8%;
+  left: 34.3%;
   transform: translateY(-50%);
-  width: 60px;
-  height: 32px;
+  width: 83px;
+  height: 83px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -364,15 +384,8 @@ main {
     box-shadow 0.5s ease-in-out;
 }
 
-#toggle-shiny.active {
-  background-color: #ffeb34 !important;
-  box-shadow: 0 2px 2px rgb(255, 208, 19);
-}
-
-
 #toggle-shiny:hover {
-  background-color: #ffeb34;
-  box-shadow: 0 2px 2px #fff07dfd;
+  background-color: #344fff46;
 
 }
 
@@ -390,18 +403,20 @@ main {
   .pokemon_effectiveness {
     position: relative;
     top: 200px;
-    left: 46.5%; /* Ajuste as coordenadas para telas menores */
+    left: 46.5%;
+    /* Ajuste as coordenadas para telas menores */
   }
 }
 
 @media (min-width: 768px) {
   .pokemon_effectiveness {
-    left: 80%; /* Ajuste as coordenadas para telas maiores */
+    left: 80%;
+    /* Ajuste as coordenadas para telas maiores */
   }
 }
 
 
-.not_very_effective{ 
+.not_very_effective {
   display: block;
   width: 100%;
   padding: 8px;
@@ -410,11 +425,14 @@ main {
   font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
-  background-color: rgba(255, 36, 36, 0.522); /* altere este valor para ajustar a opacidade */
-  opacity: 0.9; /* altere este valor para ajustar a opacidade */
+  background-color: rgba(255, 36, 36, 0.522);
+  /* altere este valor para ajustar a opacidade */
+  opacity: 0.9;
+  /* altere este valor para ajustar a opacidade */
   border: 1px solid #bd1f1f;
 }
-.super_effective { 
+
+.super_effective {
   display: block;
   width: 100%;
   padding: 8px;
@@ -423,12 +441,14 @@ main {
   font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
-  background-color: rgba(22, 255, 45, 0.537); /* altere este valor para ajustar a opacidade */
-  opacity: 0.9; /* altere este valor para ajustar a opacidade */
+  background-color: rgba(22, 255, 45, 0.537);
+  /* altere este valor para ajustar a opacidade */
+  opacity: 0.9;
+  /* altere este valor para ajustar a opacidade */
   border: 1px solid #13d220;
 }
 
-.immune { 
+.immune {
   display: block;
   width: 100%;
   padding: 8px;
@@ -437,8 +457,10 @@ main {
   font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
-  background-color: rgba(107, 107, 107, 0.537); /* altere este valor para ajustar a opacidade */
-  opacity: 0.9; /* altere este valor para ajustar a opacidade */
+  background-color: rgba(107, 107, 107, 0.537);
+  /* altere este valor para ajustar a opacidade */
+  opacity: 0.9;
+  /* altere este valor para ajustar a opacidade */
   border: 1px solid #696969;
 }
 
@@ -456,8 +478,10 @@ main {
   border-radius: 5px;
   font-size: 14px;
   white-space: nowrap;
-  margin-top: -20px; /* Ajuste a posição vertical conforme necessário */
-  margin-left: 10px; /* Ajuste a posição horizontal conforme necessário */
+  margin-top: -20px;
+  /* Ajuste a posição vertical conforme necessário */
+  margin-left: 10px;
+  /* Ajuste a posição horizontal conforme necessário */
 }
 
 .super_effective:hover {
@@ -468,7 +492,7 @@ main {
   position: relative;
 }
 
-.super_effective_box{
+.super_effective_box {
   box-shadow: 0 0 6px #00ff44;
   height: auto;
   width: 220px;
@@ -482,7 +506,8 @@ main {
   box-shadow: 0 0 6px hwb(0 59% 0%);
   height: auto;
   width: 220px;
-  background-color: rgba(255, 122, 122, 0.677); /* altere este valor para ajustar a opacidade da cor de fundo */
+  background-color: rgba(255, 122, 122, 0.677);
+  /* altere este valor para ajustar a opacidade da cor de fundo */
   padding: 4px;
   margin: 14px;
   border: 1px solid #700000;
@@ -492,8 +517,113 @@ main {
   box-shadow: 0 0 6px hwb(0 58% 42%);
   height: auto;
   width: 220px;
-  background-color: rgba(138, 138, 138, 0.677); /* altere este valor para ajustar a opacidade da cor de fundo */
+  background-color: rgba(138, 138, 138, 0.677);
+  /* altere este valor para ajustar a opacidade da cor de fundo */
   padding: 4px;
   margin: 14px;
   border: 1px solid #333;
+}
+
+
+/*Tentando deixar responsivo*/
+
+@media only screen and (max-width: 768px) {
+  .pokedex {
+    max-width: 100%;
+  }
+
+  .pokemon_image_container {
+    width: 60vw;
+    height: 35vw;
+    top: 40%;
+  }
+
+  .pokemon_data_container {
+    width: 60vw;
+    height: 18vw;
+  }
+
+  .pokemon_image {
+    width: 30%;
+    left: 51vw;
+  }
+
+  .form {
+    width: 60%;
+    left: 49%;
+    transform: translateX(-50%);
+  }
+
+
+  #toggleAudioBtn {
+    left: 69%;
+    transform: translateX(-50%);
+    height: 0.6vw;
+    /* Ajusta a altura para um valor fixo */
+    width: 1vw;
+    /* Ajusta a largura para um valor fixo */
+    font-size: 14px;
+    /* Ajusta o tamanho da fonte */
+    top: 4%;
+    /* Mantém a posição do botão no topo para melhor visibilidade */
+    display: flex;
+    /* Usa flexbox para alinhar o conteúdo */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    align-items: center;
+    /* Centraliza verticalmente */
+  }
+
+  .super_effective_box,.not_very_effective_box,.immune_box {
+    width: 70%;
+    height:auto;
+    /* Ajusta a largura para um valor fixo */
+  }
+
+  .pokemon_data {
+    font-size: 14px;
+    /* Ajusta o tamanho da fonte */
+  }
+
+  .pokemon_name,
+  .pokemon_number,
+  .pokemon_types {
+    font-size: 2.7vw;
+    /* Ajusta o tamanho da fonte */
+  }
+
+  .buttons {
+    flex-direction: line;
+    left: 57%;
+    transform: translateX(-50%);
+    width: 70vw;
+    gap: 10px;
+    /* Reduz o espaço entre botões */
+  }
+
+    .pokemon_effectiveness {
+      left: 50%;
+      transform: translateX(-50%);
+      top: 50%;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+  #toggle-shiny {
+    width: 15vw;
+    /* Aumenta a largura do botão */
+    height: 15vw;
+    font-size: 10px;
+    /* Aumenta o tamanho da fonte */
+    left: 12.5vw;
+    top: 20vw;
+  }
+
+  .button {
+    width: 16vw;
+    /* Aumenta a largura do botão */
+    height: 15vw;
+    font-size: 16px;
+    /* Aumenta o tamanho da fonte */
+  }
 }

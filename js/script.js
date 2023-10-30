@@ -467,6 +467,20 @@ const handleShiny = async () => {
   }
 };
 
+// Função para tocar o choro do Pokémon
+function playPokemonCry(pokemonName) {
+  const audio = new Audio(`https://play.pokemonshowdown.com/audio/cries/${pokemonName}.mp3`);
+  audio.play().catch(error => console.error('Erro ao tocar o choro do Pokémon:', error));
+}
+
+// Adicionando o evento de clique na imagem do Pokémon
+document.querySelector('.pokemon_image').addEventListener('click', () => {
+  const pokemonName = document.querySelector('.pokemon_name').textContent.toLowerCase();
+  playPokemonCry(pokemonName);
+});
+
+  
+
 // Seletor para todos os elementos com classe "not_very_effective"
 const notVeryEffectiveElements = document.querySelectorAll('.not_very_effective .types');
 

@@ -275,7 +275,7 @@ const renderPokemon = async (pokemon) => {
     pokemon_image.src = MISSINGNO_IMAGE_URL;
     pokemonTypes.innerHTML = MISSINGNO_TYPES;
   } else {
-    currentPokemonName = data.name.charAt(0).toUpperCase() + data.name.slice(1); // Atualize o nome do Pokémon atual
+    currentPokemonName = data.name.charAt(0).toUpperCase() + data.name.slice(1);
     const name = data.name;
     const types = data.types;
     const imageUrl = isShiny ? data.sprites.front_shiny : data.sprites.front_default;
@@ -288,7 +288,26 @@ const renderPokemon = async (pokemon) => {
     Promise.all(typeUrls.map(url => fetch(url)))
       .then(responses => Promise.all(responses.map(response => response.json())))
       .then(types => {
-        // O código para processar os tipos permanece inalterado...
+        const weaknesses = new Set();
+        const strengths = new Set();
+        const immunity = new Set();
+
+        types.forEach(type => {
+          type.damage_relations.double_damage_from.forEach(weakness => weaknesses.add(weakness.name));
+          type.damage_relations.double_damage_to.forEach(strength => strengths.add(strength.name));
+          type.damage_relations.no_damage_from.forEach(immune => immunity.add(immune.name));
+        });
+
+        const superEffectiveTypes = Array.from(strengths);
+        const notVeryEffectiveTypes = Array.from(weaknesses);
+        const immuneTypes = Array.from(immunity);
+
+        const uniqueSuperEffectiveTypes = superEffectiveTypes.filter(type => !notVeryEffectiveTypes.includes(type));
+        const uniqueNotVeryEffectiveTypes = notVeryEffectiveTypes.filter(type => !superEffectiveTypes.includes(type));
+
+        renderPokemonWeaknesses(uniqueNotVeryEffectiveTypes);
+        renderPokemonStrengths(uniqueSuperEffectiveTypes);
+        renderPokemonImmunity(immuneTypes);
       });
 
     updatePokemonData(data);
@@ -304,6 +323,9 @@ const renderPokemon = async (pokemon) => {
     }
 
     // Tratamento do botão "Shiny" com base no Shadow Mode
+    console.log("Shadow Mode:", shadowMode);  // <-- Adicione esta linha
+    console.log("Is Shiny Available:", isShinyAvailable(data));  // <-- Adicione esta linha
+
     if (shadowMode) {
       toggleShinyButton.style.display = "none"; // Esconde o botão "Shiny" no Shadow Mode
     } else if (isShinyAvailable(data)) {
@@ -321,6 +343,12 @@ const renderPokemon = async (pokemon) => {
   btn_prev.disabled = false;
   btn_random.disabled = false;
 };
+
+// Função auxiliar para verificar se o Pokémon tem forma shiny
+function isShinyAvailable(pokemonData) {
+  return pokemonData && pokemonData.sprites && pokemonData.sprites.front_shiny;
+}
+
 
 // Função auxiliar para verificar se o Pokémon tem forma shiny
 function isShinyAvailable(pokemonData) {
@@ -520,6 +548,7 @@ function toggleShadowMode() {
     pokemon_image.classList.remove('shadow-mode');
     showPokemonData();
     input_search.placeholder = 'Name or Number';
+    renderPokemon(currentPokemon);
     if (isShinyAvailable(currentPokemon)) {
       toggleShinyButton.style.display = "block"; // Mostra o botão "Shiny" se o Pokémon atual tem forma shiny
     }

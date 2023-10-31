@@ -514,6 +514,9 @@ document.querySelector('.pokemon_image').addEventListener('click', () => {
 let shadowMode = false;
 let currentPokemonName = '';
 let score = 0;
+let maxScore = localStorage.getItem('maxScore') || 0; // Recupera a pontuação máxima salva ou define como 0 se não houver
+
+
 // Funções para esconder e mostrar os dados do Pokémon
 function hidePokemonData() {
   document.querySelector('.pokemon_name').textContent = '???';
@@ -555,10 +558,6 @@ function toggleShadowMode() {
   }
 }
 
-
-
-
-
 function checkAnswer() {
   if (shadowMode) {
     const userGuess = input_search.value.toLowerCase();
@@ -566,6 +565,8 @@ function checkAnswer() {
       score++;
       updateScoreDisplay();
       showCorrectFeedback();
+      checkForBadges(); // Verifica se um badge deve ser concedido
+      saveMaxScore(); // Salva a pontuação máxima se necessário
     } else {
       showIncorrectFeedback();
     }
@@ -574,14 +575,37 @@ function checkAnswer() {
   }
 }
 
+function checkForBadges() {
+  if (score === 10) {
+    awardBadge('bronze');
+  } else if (score === 20) {
+    awardBadge('silver');
+  } else if (score === 30) {
+    awardBadge('gold');
+}
+}
+
+function awardBadge(badgeType) {
+  // Adicione lógica para mostrar o badge na interface do usuário.
+  const badgeElement = document.createElement('div');
+  badgeElement.classList.add('badge', badgeType);
+  document.body.appendChild(badgeElement);
+}
 
 function updateScoreDisplay() {
   document.querySelector('.shadow-mode-button').textContent = `Shadow Mode (Score: ${score})`;
 }
 
+function saveMaxScore() {
+  if (score > maxScore) {
+    maxScore = score;
+    localStorage.setItem('maxScore', maxScore);
+  }
+}
+
 function showCorrectFeedback() {
   const feedbackOptions = ['Great job!', 'You\'re a genius!', 'The next Red!', 'The Pokémon Master!', 'Pure talent!', 'I\'m proud of you!'];
-    const randomIndex = Math.floor(Math.random() * feedbackOptions.length);
+  const randomIndex = Math.floor(Math.random() * feedbackOptions.length);
   const randomFeedback = feedbackOptions[randomIndex];
 
   const feedbackElement = document.createElement('div');
@@ -594,16 +618,16 @@ function showCorrectFeedback() {
 
 function showIncorrectFeedback() {
   const feedbackOptions = [
-  `Don't worry, It was ${currentPokemonName}!`,
-  `You're closer! It was ${currentPokemonName}!`,
-  `You're on the right track! It was ${currentPokemonName}!`,
-  `You'll nail it soon! It was ${currentPokemonName}!`,
-  `You're learning, It was ${currentPokemonName}!`,
-  `Almost there, don't give up! It was ${currentPokemonName}!`,
-  `Your effort is paying off, It was ${currentPokemonName}!`,
-  `Great try! You're making progress! It was ${currentPokemonName}!`,
-  `You're getting better every time! It was ${currentPokemonName}!`
-];
+    `Don't worry, It was ${currentPokemonName}!`,
+    `You're closer! It was ${currentPokemonName}!`,
+    `You're on the right track! It was ${currentPokemonName}!`,
+    `You'll nail it soon! It was ${currentPokemonName}!`,
+    `You're learning, It was ${currentPokemonName}!`,
+    `Almost there, don't give up! It was ${currentPokemonName}!`,
+    `Your effort is paying off, It was ${currentPokemonName}!`,
+    `Great try! You're making progress! It was ${currentPokemonName}!`,
+    `You're getting better every time! It was ${currentPokemonName}!`
+  ];
 
   const randomIndex = Math.floor(Math.random() * feedbackOptions.length);
   const randomFeedback = feedbackOptions[randomIndex];

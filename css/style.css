@@ -20,9 +20,12 @@
 body {
   position: relative;
   background: url('/images/Background.png') no-repeat center center fixed;
-  background-position: center; /* Centraliza a imagem */
-  background-repeat: no-repeat; /* Evita que a imagem seja repetida */
-  background-size: cover; /* Faz com que a imagem cubra todo o elemento */
+  background-position: center;
+  /* Centraliza a imagem */
+  background-repeat: no-repeat;
+  /* Evita que a imagem seja repetida */
+  background-size: cover;
+  /* Faz com que a imagem cubra todo o elemento */
   text-align: center;
 }
 
@@ -243,8 +246,8 @@ main {
   user-select: none;
 }
 
-.missingno{
-  display:none;
+.missingno {
+  display: none;
   width: 10vw;
   height: 1px;
 }
@@ -553,6 +556,7 @@ main {
   /* transição suave para hover */
   z-index: 2;
 }
+
 .shadow-mode-button:hover {
   background-color: #e0e0e0;
 }
@@ -583,8 +587,13 @@ main {
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 
@@ -637,9 +646,11 @@ main {
     /* Centraliza verticalmente */
   }
 
-  .super_effective_box,.not_very_effective_box,.immune_box {
+  .super_effective_box,
+  .not_very_effective_box,
+  .immune_box {
     width: 70%;
-    height:auto;
+    height: auto;
     /* Ajusta a largura para um valor fixo */
   }
 
@@ -664,13 +675,13 @@ main {
     /* Reduz o espaço entre botões */
   }
 
-    .pokemon_effectiveness {
-      left: 50%;
-      transform: translateX(-50%);
-      top: 50%;
-      width: 100%;
-      justify-content: space-between;
-    }
+  .pokemon_effectiveness {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50%;
+    width: 100%;
+    justify-content: space-between;
+  }
 
   #toggle-shiny {
     width: 15vw;
@@ -690,7 +701,7 @@ main {
     /* Aumenta o tamanho da fonte */
   }
 
-  .shadow-mode-button{
+  .shadow-mode-button {
     font-size: 30%;
     flex: line;
     width: 25%;
@@ -698,6 +709,19 @@ main {
     left: 57%;
   }
 
+  .feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-size: 24px;
+    z-index: 1000;
+    animation: fadeOut 4s;
+  }
+
+
 
 }
-

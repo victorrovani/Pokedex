@@ -586,6 +586,80 @@ main {
   background-color: red;
 }
 
+/* Estilos para o contêiner dos badges */
+#badge-container {
+  display: flex;
+  box-shadow: #000 0 0 0 2px inset;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Estilos básicos para os badges */
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Estilos específicos para cada badge de gym */
+.badge.boulder {
+  background-image: url('https://archives.bulbagarden.net/media/upload/d/dd/Boulder_Badge.png');
+}
+
+.badge.cascade {
+  background-image: url('/images/Cascade_Badge.png');
+}
+
+.badge.thunder {
+  background-image: url('https://archives.bulbagarden.net/media/upload/a/a6/Thunder_Badge.png');
+}
+
+.badge.rainbow {
+  background-image: url('https://archives.bulbagarden.net/media/upload/b/b5/Rainbow_Badge.png');
+}
+
+.badge.soul {
+  background-image: url('https://archives.bulbagarden.net/media/upload/7/7d/Soul_Badge.png');
+}
+
+.badge.marsh {
+  background-image: url('https://archives.bulbagarden.net/media/upload/6/6b/Marsh_Badge.png');
+}
+
+.badge.volcano {
+  background-image: url('https://archives.bulbagarden.net/media/upload/1/12/Volcano_Badge.png');
+}
+
+.badge.earth {
+  background-image: url('https://archives.bulbagarden.net/media/upload/7/78/Earth_Badge.png');
+}
+
+
+/* Adicione estilos para os outros badges aqui... */
+
+/* Animação ao receber um badge (opcional) */
+@keyframes badge-animation {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.badge.new {
+  animation: badge-animation 0.5s ease-in-out;
+}
+
+
+
+
+
+
 @keyframes fadeOut {
   from {
     opacity: 1;

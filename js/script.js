@@ -557,7 +557,6 @@ function toggleShadowMode() {
     }
   }
 }
-
 function checkAnswer() {
   if (shadowMode) {
     const userGuess = input_search.value.toLowerCase();
@@ -576,20 +575,31 @@ function checkAnswer() {
 }
 
 function checkForBadges() {
-  if (score === 10) {
-    awardBadge('bronze');
+  // Atualize esta função para conceder os badges corretos com base na pontuação
+  if (score === 5) {
+    awardBadge('boulder');
+  } else if (score === 10) {
+    awardBadge('cascade');
+  } else if (score === 15) {
+    awardBadge('thunder');
   } else if (score === 20) {
-    awardBadge('silver');
+    awardBadge('rainbow');
+  } else if (score === 25) {
+    awardBadge('soul');
   } else if (score === 30) {
-    awardBadge('gold');
-}
+    awardBadge('marsh');
+  } else if (score === 35) {
+    awardBadge('volcano');
+  } else if (score === 40) {
+    awardBadge('earth');
+  }
 }
 
 function awardBadge(badgeType) {
-  // Adicione lógica para mostrar o badge na interface do usuário.
+  const badgeContainer = document.getElementById('badge-container');
   const badgeElement = document.createElement('div');
-  badgeElement.classList.add('badge', badgeType);
-  document.body.appendChild(badgeElement);
+  badgeElement.classList.add('badge', badgeType, 'new');
+  badgeContainer.appendChild(badgeElement);
 }
 
 function updateScoreDisplay() {

@@ -543,7 +543,7 @@ main {
   /* cor do texto */
   padding: 10px 20px;
   /* espaçamento interno */
-  font-size: 0.7vw;
+  font-size: 60%;
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 12vw;
@@ -571,7 +571,7 @@ main {
   color: white;
   font-size: 24px;
   z-index: 1000;
-  animation: fadeOut 2s;
+  animation: fadeOut 4s;
 }
 
 .feedback.correct {
@@ -689,4 +689,15 @@ main {
     font-size: 16px;
     /* Aumenta o tamanho da fonte */
   }
+
+  .shadow-mode-button{
+    font-size: 30%;
+    flex: line;
+    width: 25%;
+    top: 10%;
+    left: 57%;
+  }
+
+
 }
+

@@ -454,10 +454,10 @@ const handleRoll = () => {
 const createHealthBar = (pokemonHp, pokemonMaxHp) => {
   const healthPercentage = (pokemonMaxHp);
   const healthBarHTML = `
-    <div class="health_bar" style=" width: ${healthPercentage}%; position: relative;">
-      <div class="hp_text" style="">${pokemonHp} / ${pokemonMaxHp}</div>
-    </div>
-  `;
+      <div class="health_bar" style=" width: ${healthPercentage}%; position: relative;">
+        <div class="hp_text" style="">${pokemonHp} / ${pokemonMaxHp}</div>
+      </div>
+    `;
   return healthBarHTML;
 };
 
@@ -580,20 +580,41 @@ function updateScoreDisplay() {
 }
 
 function showCorrectFeedback() {
+  const feedbackOptions = ['Great job!', 'You\'re a genius!', 'The next Red!', 'The Pokémon Master!', 'Pure talent!', 'I\'m proud of you!'];
+    const randomIndex = Math.floor(Math.random() * feedbackOptions.length);
+  const randomFeedback = feedbackOptions[randomIndex];
+
   const feedbackElement = document.createElement('div');
-  feedbackElement.textContent = 'Correct!';
+  feedbackElement.textContent = randomFeedback;
   feedbackElement.classList.add('feedback', 'correct');
   document.body.appendChild(feedbackElement);
-  setTimeout(() => feedbackElement.remove(), 2000);
+  setTimeout(() => feedbackElement.remove(), 4000);
 }
 
+
 function showIncorrectFeedback() {
+  const feedbackOptions = [
+  `Don't worry, It was ${currentPokemonName}!`,
+  `You're closer! It was ${currentPokemonName}!`,
+  `You're on the right track! It was ${currentPokemonName}!`,
+  `You'll nail it soon! It was ${currentPokemonName}!`,
+  `You're learning, It was ${currentPokemonName}!`,
+  `Almost there, don't give up! It was ${currentPokemonName}!`,
+  `Your effort is paying off, It was ${currentPokemonName}!`,
+  `Great try! You're making progress! It was ${currentPokemonName}!`,
+  `You're getting better every time! It was ${currentPokemonName}!`
+];
+
+  const randomIndex = Math.floor(Math.random() * feedbackOptions.length);
+  const randomFeedback = feedbackOptions[randomIndex];
+
   const feedbackElement = document.createElement('div');
-  feedbackElement.textContent = 'Try again!';
+  feedbackElement.textContent = randomFeedback;
   feedbackElement.classList.add('feedback', 'incorrect');
   document.body.appendChild(feedbackElement);
-  setTimeout(() => feedbackElement.remove(), 2000);
+  setTimeout(() => feedbackElement.remove(), 4000);
 }
+
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();

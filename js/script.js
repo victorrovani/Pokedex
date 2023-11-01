@@ -241,22 +241,13 @@ function playMusicFirstTime() {
   document.body.removeEventListener("click", playMusicFirstTime);
 }
 
-document.getElementById("toggleAudioBtn").addEventListener("click", function () {
-  var bgMusic = document.getElementById("bgMusic");
-  var icon = this.querySelector("i");
-  if (bgMusic.paused) {
-    bgMusic.play();
-    icon.classList.remove("fa-volume-mute");
-    icon.classList.add("fa-volume-up");
-  } else {
-    bgMusic.pause();
-    icon.classList.remove("fa-volume-up");
-    icon.classList.add("fa-volume-mute");
-  }
-});
+// Declarar mountainMusic no escopo global
+const mountainMusic = new Audio('/assets/boulder.mp3'); // Substitua pelo caminho do seu arquivo de música
+mountainMusic.volume = 0.15; // Ajuste o volume para 15%
 
 var bgMusic = document.getElementById("bgMusic");
 bgMusic.volume = 0.15;
+
 
 
 const renderPokemon = async (pokemon) => {
@@ -576,7 +567,7 @@ function checkAnswer() {
 
 function checkForBadges() {
   // Atualize esta função para conceder os badges corretos com base na pontuação
-  if (score === 5) {
+  if (score === 1) {
     awardBadge('boulder');
   } else if (score === 10) {
     awardBadge('cascade');
@@ -595,12 +586,145 @@ function checkForBadges() {
   }
 }
 
+// Variável para armazenar a última vez que o efeito do badge foi acionado
+let lastBadgeClickTime = 0;
+const badgeClickCooldown = 5000; // 5 segundos de cooldown
+
 function awardBadge(badgeType) {
+  // Adicione lógica para mostrar o badge na interface do usuário.
   const badgeContainer = document.getElementById('badge-container');
   const badgeElement = document.createElement('div');
-  badgeElement.classList.add('badge', badgeType, 'new');
+  badgeElement.classList.add('badge', badgeType);
+
+  // Adiciona um evento de clique ao badge
+  badgeElement.addEventListener('click', function() {
+    const currentTime = Date.now();
+    if (currentTime - lastBadgeClickTime > badgeClickCooldown) {
+      lastBadgeClickTime = currentTime;
+      displayMessageAndTransition(badgeType);
+    }
+  });
+
   badgeContainer.appendChild(badgeElement);
 }
+
+
+function displayMessageAndTransition(badgeType) {
+  // Mostrar mensagem
+  const messageElement = document.createElement('div');
+  messageElement.textContent = "Something strange is happening to your badge!";
+  messageElement.classList.add('mystery-message');
+  document.body.appendChild(messageElement);
+  
+  // Tocar efeito sonoro
+  const audio = new Audio('/assets/mystery_warning.mp3'); // Substitua pelo caminho do seu arquivo de som
+  audio.play();
+
+  // Esperar alguns segundos e então iniciar a transição
+  setTimeout(() => {
+    messageElement.remove();
+    startTransition(badgeType);
+  }, 3000); // 3 segundos para ler a mensagem
+}
+
+function startTransition(badgeType) {
+  const overlay = document.createElement('div');
+  overlay.classList.add('transition-overlay');
+  document.body.appendChild(overlay);
+
+  // Esperar um pouco e então mudar o cenário
+  setTimeout(() => {
+    changeScenery(badgeType);
+    overlay.remove();
+  }, 2000); // 2 segundos para a transição
+}
+
+// Variável para armazenar se o cenário de montanha está ativo
+let isMountainScenery = false;
+mountainMusic.volume = 0.20; // Ajuste o volume para 50%
+bgMusic.volume = 0.25;       // Ajuste o volume para 50%
+
+
+function fadeAudioOut(audioElement, callback) {
+  let volume = audioElement.volume;
+  const originalVolume = volume;
+  const fadeOutInterval = setInterval(() => {
+    volume -= 0.03;
+    if (volume <= 0) {
+      clearInterval(fadeOutInterval);
+      audioElement.volume = 0;
+      audioElement.pause();
+      audioElement.currentTime = 0;
+      audioElement.volume = originalVolume; // Restaura o volume original
+      if (callback) callback(); // Chama a função de callback quando a transição terminar
+    } else {
+      audioElement.volume = volume;
+    }
+  }, 100); // Diminui o volume a cada 100 milissegundos
+}
+
+function changeScenery(badgeType) {
+  const bodyElement = document.querySelector('body');
+  const bgMusic = document.getElementById('bgMusic');
+
+  if (badgeType === 'boulder' && !isMountainScenery) {
+    console.log("Entrando no cenário de montanha");
+    bodyElement.classList.add('boulder-scenery');
+    isMountainScenery = true;
+    fadeAudioOut(bgMusic, () => {
+      console.log("Iniciando música da montanha");
+      mountainMusic.currentTime = 0;
+      mountainMusic.play().catch(e => console.error("Erro ao tocar música da montanha:", e));
+    });
+  } else if (badgeType === 'boulder' && isMountainScenery) {
+    console.log("Saindo do cenário de montanha");
+    bodyElement.classList.remove('boulder-scenery');
+    isMountainScenery = false;
+    fadeAudioOut(mountainMusic, () => {
+      console.log("Retomando música de fundo");
+      bgMusic.currentTime = 0;
+      bgMusic.play().catch(e => console.error("Erro ao tocar música de fundo:", e));
+    });
+  }
+}
+
+
+
+
+
+// Função atualizada para controlar a música com base no cenário
+document.getElementById("toggleAudioBtn").addEventListener("click", function () {
+  var bgMusic = document.getElementById("bgMusic");
+  var icon = this.querySelector("i");
+
+  // Se estiver no cenário da montanha, controla a música da montanha
+  if (isMountainScenery) {
+    if (mountainMusic.paused) {
+      mountainMusic.play();
+      icon.classList.remove("fa-volume-mute");
+      icon.classList.add("fa-volume-up");
+    } else {
+      mountainMusic.pause();
+      icon.classList.remove("fa-volume-up");
+      icon.classList.add("fa-volume-mute");
+    }
+  } else {
+    // Se não estiver no cenário da montanha, controla a música de fundo normal
+    if (bgMusic.paused) {
+      bgMusic.play();
+      icon.classList.remove("fa-volume-mute");
+      icon.classList.add("fa-volume-up");
+    } else {
+      bgMusic.pause();
+      icon.classList.remove("fa-volume-up");
+      icon.classList.add("fa-volume-mute");
+    }
+  }
+});
+
+
+
+
 
 function updateScoreDisplay() {
   document.querySelector('.shadow-mode-button').textContent = `Shadow Mode (Score: ${score})`;

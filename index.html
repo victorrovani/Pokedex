@@ -11,45 +11,53 @@
 </head>
 
 <body>
+    <video id="thunderVideo" class="hidden background-video" loop muted>
+        <source src="assets/Thunder.mp4" type="video/mp4">
+    </video>
+
+
     <audio id="pokemonCryAudio"></audio>
-    <audio id="normalMusic" loop>
+    <audio id="normalMusic" class="game-audio" loop>
         <source src="/assets/normal.mp3" type="audio/mpeg">
     </audio>
-    <audio id="boulderMusic" loop>
+    <audio id="boulderMusic" class="game-audio" loop>
         <source src="/assets/boulder.mp3" type="audio/mpeg">
     </audio>
-    <audio id="cascadeMusic" loop>
+    <audio id="cascadeMusic" class="game-audio" loop>
         <source src="/assets/cascade.mp3" type="audio/mpeg">
     </audio>
-    <audio id="thunderMusic" loop>
+    <audio id="thunderMusic" class="game-audio" loop>
         <source src="/assets/thunder.mp3" type="audio/mpeg">
     </audio>
-    <audio id="rainbowMusic" loop>
+    <audio id="rainbowMusic" class="game-audio" loop>
         <source src="/assets/rainbow.mp3" type="audio/mpeg">
     </audio>
-    <audio id="soulMusic" loop>
+    <audio id="soulMusic" class="game-audio" loop>
         <source src="/assets/soul.mp3" type="audio/mpeg">
     </audio>
-    <audio id="marshMusic" loop>
+    <audio id="marshMusic" class="game-audio" loop>
         <source src="/assets/marsh.mp3" type="audio/mpeg">
     </audio>
-    <audio id="volcanoMusic" loop>
+    <audio id="volcanoMusic" class="game-audio" loop>
         <source src="/assets/volcano.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="earthMusic" class="game-audio" loop>
+        <source src="/assets/earth.mp3" type="audio/mpeg">
     </audio>
 
 
 
 
     <button id="toggleAudioBtn"><i class="fas fa-volume-up"></i></button>
-    
+
     <button class="shadow-mode-button">Who's That Pokemon?</button>
 
     <div id="badge-container" class="badge-container">
         <div class="badge-rewards-message">Badge Rewards</div>
     </div>
-    
+
     <main>
-        
+
         <img alt="pokemon" class="missingno" src="images/missingno.png">
         <img src="images/loading-gif.gif" alt="loading" class="loading_image">
         <img src="images/pokedex2.png" alt="pokedex" class="pokedex" draggable="false">
@@ -57,19 +65,20 @@
         <div id="toggle-shiny" title="Secret: Shiny!"></div>
 
         <div class="pokemon_image_container"></div>
-         <img alt="pokemon" class="pokemon_image" style="display: none;">
+        <img alt="pokemon" class="pokemon_image" style="display: none;">
         <div class="pokemon_data_container"></div>
-            <div class="pokemon_data">
-             <div class="health_bar_container">
-                 <div class="health_bar"></div>
-                 <div class="hp_text"></div>
-             </div>
+        <div class="pokemon_data">
+            <div class="health_bar_container">
+                <div class="health_bar"></div>
+                <div class="hp_text"></div>
+            </div>
             <div class="pokemon_number"></div>
             <div class="pokemon_name"></div>
             <div class="pokemon_types"></div>
         </div>
         <form class="form">
-            <input type="search" class="input_search" id="pokemon-search" placeholder="Name or Number" required onfocus="clearPlaceholder()" />
+            <input type="search" class="input_search" id="pokemon-search" placeholder="Name or Number" required
+                onfocus="clearPlaceholder()" />
 
         </form>
         <div class="buttons">
@@ -102,7 +111,7 @@
             <div class="immune" data-multiplier="0x"></div>
         </div>
     </div>
-    
+
     <script defer src="js/script.js"></script>
 </body>
 

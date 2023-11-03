@@ -42,10 +42,25 @@ body {
 }
 
 .thunder-scenery {
-  background-image: url('/images/Thunder_Scenery.png'); /* Substitua pelo caminho correto da sua imagem */
+  background-image: url('/assets/Thunder.mp4'); /* Substitua pelo caminho correto da sua imagem */
   background-size: cover; /* ou 'contain' se quiser ver a imagem inteira */
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.background-video {
+  /*coloque o video como hidden*/
+  position: fixed; /* or absolute */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cobrir toda a tela */
+  z-index: -1; /* Colocar o vídeo atrás de outros conteúdos */
+}
+
+.hidden {
+  display: none;
 }
 
 .rainbow-scenery {
@@ -644,7 +659,7 @@ main {
 
 /* Estilos para o contêiner dos badges */
 #badge-container {
-  position: absolute; /* ou 'fixed' se preferir que fique fixo na tela */
+  position: fixed; /* ou 'fixed' se preferir que fique fixo na tela */
   left: 20px; /* Ajuste a distância da esquerda conforme necessário */
   top: 50%; /* Posiciona no meio verticalmente */
   transform: translateY(-50%); /* Centraliza verticalmente */
@@ -668,8 +683,10 @@ main {
   text-align: center;
   bottom: 100%;
   margin-top: 10px;
-  color: #868686;
-  background-color: #00000067;
+  color: #b8b5b5;
+  background-color: #0000007d;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 

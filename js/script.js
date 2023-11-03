@@ -26,7 +26,9 @@ const toggleAudioBtn = document.getElementById('toggleAudioBtn');
 const normalMusic = document.getElementById('normalMusic');
 const boulderMusic = document.getElementById('boulderMusic');
 const cascadeMusic = document.getElementById('cascadeMusic');
+const thunderMusic = document.getElementById('thunderMusic');
 const volcanoMusic = document.getElementById('volcanoMusic');
+const earthMusic = document.getElementById('earthMusic');
 
 // Verifique qual música deve ser controlada com base no cenário atual
 function getCurrentMusic() {
@@ -35,8 +37,12 @@ function getCurrentMusic() {
       return boulderMusic;
     case 'cascade':
       return cascadeMusic;
+    case 'thunder':
+      return thunderMusic;
     case 'volcano':
       return volcanoMusic;
+    case 'earth':
+      return earthMusic;
     default:
       return normalMusic;
   }
@@ -45,7 +51,7 @@ function getCurrentMusic() {
 // Evento de clique para alternar a música
 toggleAudioBtn.addEventListener('click', () => {
   const currentMusic = getCurrentMusic();
-  
+
   if (currentMusic.paused) {
     currentMusic.play().catch(e => console.error("Erro ao tocar música:", e));
   } else {
@@ -593,21 +599,21 @@ function checkAnswer() {
 
 function checkForBadges() {
   // Atualize esta função para conceder os badges corretos com base na pontuação
-  if (score === 1) {
+  if (score === 10) {
     awardBadge('boulder');
   } else if (score === 2) {
     awardBadge('cascade');
-  } else if (score === 15) {
-    awardBadge('thunder');
-  } else if (score === 20) {
-    awardBadge('rainbow');
-  } else if (score === 25) {
-    awardBadge('soul');
-  } else if (score === 30) {
-    awardBadge('marsh');
   } else if (score === 3) {
+    awardBadge('thunder');
+  } else if (score === 4) {
+    awardBadge('rainbow');
+  } else if (score === 5) {
+    awardBadge('soul');
+  } else if (score === 6) {
+    awardBadge('marsh');
+  } else if (score === 7) {
     awardBadge('volcano');
-  } else if (score === 40) {
+  } else if (score === 1) {
     awardBadge('earth');
   }
 }
@@ -623,7 +629,7 @@ function awardBadge(badgeType) {
   badgeElement.classList.add('badge', badgeType);
 
   // Adiciona um evento de clique ao badge
-  badgeElement.addEventListener('click', function() {
+  badgeElement.addEventListener('click', function () {
     const currentTime = Date.now();
     if (currentTime - lastBadgeClickTime > badgeClickCooldown) {
       lastBadgeClickTime = currentTime;
@@ -641,7 +647,7 @@ function displayMessageAndTransition(badgeType) {
   messageElement.textContent = "Something strange is happening to your badge!";
   messageElement.classList.add('mystery-message');
   document.body.appendChild(messageElement);
-  
+
   // Tocar efeito sonoro
   const audio = new Audio('/assets/mystery_warning.mp3'); // Substitua pelo caminho do seu arquivo de som
   audio.play();
@@ -665,12 +671,14 @@ function startTransition(badgeType) {
   }, 2000); // 2 segundos para a transição
 }
 
-normalMusic.volume = 0.25;   
-boulderMusic.volume = 0.20; 
+normalMusic.volume = 0.20;
+boulderMusic.volume = 0.20;
 cascadeMusic.volume = 0.20;
 volcanoMusic.volume = 0.20;
+earthMusic.volume = 0.20;
+thunderMusic.volume = 0.20;
 
-  
+
 
 
 function fadeAudioOut(audioElement, callback) {
@@ -698,23 +706,36 @@ function changeScenery(badgeType) {
   const boulderMusic = document.getElementById('boulderMusic');
   const cascadeMusic = document.getElementById('cascadeMusic');
   const volcanoMusic = document.getElementById('volcanoMusic');
+  const earthMusic = document.getElementById('earthMusic');
+  const thunderMusic = document.getElementById('thunderMusic');
+  const thunderVideo =  document.getElementById('thunderVideo');
 
-  // Função auxiliar para limpar o cenário atual
-  function clearCurrentScenery() {
-    const allSceneries = ['boulder', 'cascade', 'volcano']; // Adicione mais cenários aqui
-    allSceneries.forEach(scenery => {
-      bodyElement.classList.remove(`${scenery}-scenery`);
-    });
-    pokemonImageContainer.style.backgroundImage = ''; // Define para a imagem padrão se necessário
-    // Interrompe todas as músicas antes de trocar
-    ['normalMusic', 'boulderMusic', 'cascadeMusic', 'volcanoMusic'].forEach(musicId => {
-      const music = document.getElementById(musicId);
-      if (music && !music.paused) {
-        music.pause();
-        music.currentTime = 0; // Reseta o tempo da música para o início
-      }
-    });
+// Função auxiliar para limpar o cenário atual
+function clearCurrentScenery() {
+  const allSceneries = ['boulder', 'cascade', 'volcano', 'earth', 'thunder']; // Adicione mais cenários aqui
+  allSceneries.forEach(scenery => {
+    bodyElement.classList.remove(`${scenery}-scenery`);
+  });
+  pokemonImageContainer.style.backgroundImage = ''; // Define para a imagem padrão se necessário
+
+  // Interrompe todas as músicas antes de trocar
+  ['normalMusic', 'boulderMusic', 'cascadeMusic', 'volcanoMusic', 'earthMusic', 'thunderMusic'].forEach(musicId => {
+    const music = document.getElementById(musicId);
+    if (music && !music.paused) {
+      music.pause();
+      music.currentTime = 0; // Reseta o tempo da música para o início
+    }
+  });
+
+  // Adicionar aqui a parte para pausar e esconder o vídeo
+  const thunderVideo = document.getElementById('thunderVideo');
+  if (thunderVideo) {
+    thunderVideo.pause();
+    thunderVideo.currentTime = 0; // Reseta o vídeo para o início
+    thunderVideo.classList.add('hidden'); // Esconde o vídeo
   }
+}
+
 
   // Se está mudando para um novo cenário, limpa o cenário atual
   if (currentScenery !== badgeType) {
@@ -735,12 +756,35 @@ function changeScenery(badgeType) {
       cascadeMusic.play().catch(e => console.error(`Erro ao tocar música de cascade:`, e));
       currentScenery = 'cascade';
       break;
+    case 'thunder':
+      bodyElement.classList.add('thunder-scenery');
+      pokemonImageContainer.style.backgroundImage = 'url("/images/Thunder_16b.png")';
+
+      thunderMusic.play().catch(e => console.error(`Erro ao tocar música de thunder:`, e));
+      // Aqui você deve adicionar o vídeo ao cenário de thunder
+      const thunderVideo = document.getElementById('thunderVideo');
+      if (thunderVideo) {
+        thunderVideo.classList.remove('hidden'); // Remove a classe que esconde o vídeo
+        thunderVideo.play().catch(e => console.error(`Erro ao tocar vídeo de thunder:`, e));
+      }
+      currentScenery = 'thunder';
+      break;
     case 'volcano':
       bodyElement.classList.add('volcano-scenery');
       pokemonImageContainer.style.backgroundImage = 'url("/images/Volcano_16b.png")';
       volcanoMusic.play().catch(e => console.error(`Erro ao tocar música de volcano:`, e));
       currentScenery = 'volcano';
       break;
+    case 'earth':
+      bodyElement.classList.add('earth-scenery');
+      pokemonImageContainer.style.backgroundImage = 'url("/images/Earth_16b.png")';
+      earthMusic.play().catch(e => console.error(`Erro ao tocar música de earth:`, e));
+      currentScenery = 'earth';
+      break;
+    default:
+      bodyElement.classList.add('normal-scenery');
+      normalMusic.play().catch(e => console.error(`Erro ao tocar música normal:`, e));
+      currentScenery = 'normal';
     // Adicione mais cases conforme necessário para novos cenários
     // ...
   }

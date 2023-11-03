@@ -21,6 +21,39 @@ let isShiny = localStorage.getItem('isShiny') === 'true' || false;
 function renderPokemonImage() {
 }
 
+
+const toggleAudioBtn = document.getElementById('toggleAudioBtn');
+const normalMusic = document.getElementById('normalMusic');
+const boulderMusic = document.getElementById('boulderMusic');
+const cascadeMusic = document.getElementById('cascadeMusic');
+const volcanoMusic = document.getElementById('volcanoMusic');
+
+// Verifique qual música deve ser controlada com base no cenário atual
+function getCurrentMusic() {
+  switch (currentScenery) {
+    case 'boulder':
+      return boulderMusic;
+    case 'cascade':
+      return cascadeMusic;
+    case 'volcano':
+      return volcanoMusic;
+    default:
+      return normalMusic;
+  }
+}
+
+// Evento de clique para alternar a música
+toggleAudioBtn.addEventListener('click', () => {
+  const currentMusic = getCurrentMusic();
+  
+  if (currentMusic.paused) {
+    currentMusic.play().catch(e => console.error("Erro ao tocar música:", e));
+  } else {
+    currentMusic.pause();
+  }
+});
+
+
 const toggleShinyButton = document.querySelector('#toggle-shiny');
 
 toggleShinyButton.addEventListener('click', async () => {
@@ -234,19 +267,12 @@ const renderPokemonImmunity = (immunity) => {
 document.body.addEventListener("click", playMusicFirstTime);
 
 function playMusicFirstTime() {
-  var bgMusic = document.getElementById("bgMusic");
-  if (bgMusic.paused) {
-    bgMusic.play();
+  var normalMusic = document.getElementById("normalMusic");
+  if (normalMusic.paused) {
+    normalMusic.play();
   }
   document.body.removeEventListener("click", playMusicFirstTime);
 }
-
-// Declarar mountainMusic no escopo global
-const mountainMusic = new Audio('/assets/boulder.mp3'); // Substitua pelo caminho do seu arquivo de música
-mountainMusic.volume = 0.15; // Ajuste o volume para 15%
-
-var bgMusic = document.getElementById("bgMusic");
-bgMusic.volume = 0.15;
 
 
 
@@ -569,7 +595,7 @@ function checkForBadges() {
   // Atualize esta função para conceder os badges corretos com base na pontuação
   if (score === 1) {
     awardBadge('boulder');
-  } else if (score === 10) {
+  } else if (score === 2) {
     awardBadge('cascade');
   } else if (score === 15) {
     awardBadge('thunder');
@@ -579,7 +605,7 @@ function checkForBadges() {
     awardBadge('soul');
   } else if (score === 30) {
     awardBadge('marsh');
-  } else if (score === 35) {
+  } else if (score === 3) {
     awardBadge('volcano');
   } else if (score === 40) {
     awardBadge('earth');
@@ -639,10 +665,12 @@ function startTransition(badgeType) {
   }, 2000); // 2 segundos para a transição
 }
 
-// Variável para armazenar se o cenário de montanha está ativo
-let isMountainScenery = false;
-mountainMusic.volume = 0.20; // Ajuste o volume para 50%
-bgMusic.volume = 0.25;       // Ajuste o volume para 50%
+normalMusic.volume = 0.25;   
+boulderMusic.volume = 0.20; 
+cascadeMusic.volume = 0.20;
+volcanoMusic.volume = 0.20;
+
+  
 
 
 function fadeAudioOut(audioElement, callback) {
@@ -662,65 +690,62 @@ function fadeAudioOut(audioElement, callback) {
     }
   }, 100); // Diminui o volume a cada 100 milissegundos
 }
-
+let currentScenery = 'initial';
 function changeScenery(badgeType) {
   const bodyElement = document.querySelector('body');
-  const bgMusic = document.getElementById('bgMusic');
+  const pokemonImageContainer = document.querySelector('.pokemon_image_container');
+  const normalMusic = document.getElementById('normalMusic');
+  const boulderMusic = document.getElementById('boulderMusic');
+  const cascadeMusic = document.getElementById('cascadeMusic');
+  const volcanoMusic = document.getElementById('volcanoMusic');
 
-  if (badgeType === 'boulder' && !isMountainScenery) {
-    console.log("Entrando no cenário de montanha");
-    bodyElement.classList.add('boulder-scenery');
-    isMountainScenery = true;
-    fadeAudioOut(bgMusic, () => {
-      console.log("Iniciando música da montanha");
-      mountainMusic.currentTime = 0;
-      mountainMusic.play().catch(e => console.error("Erro ao tocar música da montanha:", e));
+  // Função auxiliar para limpar o cenário atual
+  function clearCurrentScenery() {
+    const allSceneries = ['boulder', 'cascade', 'volcano']; // Adicione mais cenários aqui
+    allSceneries.forEach(scenery => {
+      bodyElement.classList.remove(`${scenery}-scenery`);
     });
-  } else if (badgeType === 'boulder' && isMountainScenery) {
-    console.log("Saindo do cenário de montanha");
-    bodyElement.classList.remove('boulder-scenery');
-    isMountainScenery = false;
-    fadeAudioOut(mountainMusic, () => {
-      console.log("Retomando música de fundo");
-      bgMusic.currentTime = 0;
-      bgMusic.play().catch(e => console.error("Erro ao tocar música de fundo:", e));
+    pokemonImageContainer.style.backgroundImage = ''; // Define para a imagem padrão se necessário
+    // Interrompe todas as músicas antes de trocar
+    ['normalMusic', 'boulderMusic', 'cascadeMusic', 'volcanoMusic'].forEach(musicId => {
+      const music = document.getElementById(musicId);
+      if (music && !music.paused) {
+        music.pause();
+        music.currentTime = 0; // Reseta o tempo da música para o início
+      }
     });
+  }
+
+  // Se está mudando para um novo cenário, limpa o cenário atual
+  if (currentScenery !== badgeType) {
+    clearCurrentScenery();
+  }
+
+  // Agora, configure o novo cenário e toque a música correspondente
+  switch (badgeType) {
+    case 'boulder':
+      bodyElement.classList.add('boulder-scenery');
+      pokemonImageContainer.style.backgroundImage = 'url("/images/Boulder_16b.png")';
+      boulderMusic.play().catch(e => console.error(`Erro ao tocar música de boulder:`, e));
+      currentScenery = 'boulder';
+      break;
+    case 'cascade':
+      bodyElement.classList.add('cascade-scenery');
+      pokemonImageContainer.style.backgroundImage = 'url("/images/Cascade_16b.png")';
+      cascadeMusic.play().catch(e => console.error(`Erro ao tocar música de cascade:`, e));
+      currentScenery = 'cascade';
+      break;
+    case 'volcano':
+      bodyElement.classList.add('volcano-scenery');
+      pokemonImageContainer.style.backgroundImage = 'url("/images/Volcano_16b.png")';
+      volcanoMusic.play().catch(e => console.error(`Erro ao tocar música de volcano:`, e));
+      currentScenery = 'volcano';
+      break;
+    // Adicione mais cases conforme necessário para novos cenários
+    // ...
   }
 }
 
-
-
-
-
-// Função atualizada para controlar a música com base no cenário
-document.getElementById("toggleAudioBtn").addEventListener("click", function () {
-  var bgMusic = document.getElementById("bgMusic");
-  var icon = this.querySelector("i");
-
-  // Se estiver no cenário da montanha, controla a música da montanha
-  if (isMountainScenery) {
-    if (mountainMusic.paused) {
-      mountainMusic.play();
-      icon.classList.remove("fa-volume-mute");
-      icon.classList.add("fa-volume-up");
-    } else {
-      mountainMusic.pause();
-      icon.classList.remove("fa-volume-up");
-      icon.classList.add("fa-volume-mute");
-    }
-  } else {
-    // Se não estiver no cenário da montanha, controla a música de fundo normal
-    if (bgMusic.paused) {
-      bgMusic.play();
-      icon.classList.remove("fa-volume-mute");
-      icon.classList.add("fa-volume-up");
-    } else {
-      bgMusic.pause();
-      icon.classList.remove("fa-volume-up");
-      icon.classList.add("fa-volume-mute");
-    }
-  }
-});
 
 
 
@@ -823,4 +848,4 @@ input_search.addEventListener('keydown', handleSecretCode);
 
 
 // Render a random Pokemon on page load
-handleRandom();
+handleRandom(); 

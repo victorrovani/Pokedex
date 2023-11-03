@@ -34,7 +34,54 @@ body {
   background-repeat: no-repeat;
 }
 
+.cascade-scenery {
+  background-image: url('/images/Cascade_Scenery.png'); /* Substitua pelo caminho correto da sua imagem */
+  background-size: cover; /* ou 'contain' se quiser ver a imagem inteira */
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
+.thunder-scenery {
+  background-image: url('/images/Thunder_Scenery.png'); /* Substitua pelo caminho correto da sua imagem */
+  background-size: cover; /* ou 'contain' se quiser ver a imagem inteira */
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.rainbow-scenery {
+  background-image: url('/images/Rainbow_Scenery.png'); /* Substitua pelo caminho correto da sua imagem */
+  background-size: cover; /* ou 'contain' se quiser ver a imagem inteira */
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.soul-scenery {
+  background-image: url('/images/Soul_Scenery.png'); /* Substitua pelo caminho correto da sua imagem */
+  background-size: cover; /* ou 'contain' se quiser ver a imagem inteira */
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.marsh-scenery {
+  background-image: url('/images/Marsh_Scenery.png'); /* Substitua pelo caminho correto da sua imagem */
+  background-size: cover; /* ou 'contain' se quiser ver a imagem inteira */
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.volcano-scenery {
+  background-image: url('/images/Volcano_Scenery.png'); /* Substitua pelo caminho correto da sua imagem */
+  background-size: cover; /* ou 'contain' se quiser ver a imagem inteira */
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.earth-scenery {
+  background-image: url('/images/Earth_Scenery.png'); /* Substitua pelo caminho correto da sua imagem */
+  background-size: cover; /* ou 'contain' se quiser ver a imagem inteira */
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
 /* Style the main content container */
 main {
@@ -69,6 +116,8 @@ main {
   background-color: #740a0ac9;
   /* cor de fundo um pouco mais escura no hover */
 }
+
+
 
 
 /* Style the Pokédex image */

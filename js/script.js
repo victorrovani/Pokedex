@@ -84,6 +84,12 @@ async function fetchTypeData(type) {
   }
 }
 
+
+//Lazy Loading
+document.querySelectorAll('img').forEach((img) => {
+  img.setAttribute('loading', 'lazy');
+});
+
 // Define the fetchPokemon function
 const fetchPokemon = async (pokemon) => {
   try {
@@ -599,7 +605,7 @@ function checkAnswer() {
 
 function checkForBadges() {
   // Atualize esta função para conceder os badges corretos com base na pontuação
-  if (score === 10) {
+  if (score === 1) {
     awardBadge('boulder');
   } else if (score === 2) {
     awardBadge('cascade');
@@ -613,7 +619,7 @@ function checkForBadges() {
     awardBadge('marsh');
   } else if (score === 7) {
     awardBadge('volcano');
-  } else if (score === 1) {
+  } else if (score === 8) {
     awardBadge('earth');
   }
 }
